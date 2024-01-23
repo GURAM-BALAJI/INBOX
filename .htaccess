@@ -1,0 +1,26 @@
+RewriteEngine On
+RewriteRule ^MyHome?$ index.php
+RewriteRule ^MyCart?$ cart.php
+RewriteRule ^MyWallet?$ account.php
+RewriteRule ^MySettings?$ settings.php
+RewriteRule ^MyProfile?$ profile.php
+RewriteRule ^MyContact?$ contact.php
+RewriteRule ^LogMe?$ login.php
+RewriteRule ^JoinUs?$ sign_up.php
+RewriteRule ^ForgotMe?$ forgot-password.php
+RewriteRule ^Forgot_sent?$ forgot-password-mail-send.php
+RewriteRule ^NewPassword?$ new-password.php
+RewriteRule ^MailStatus?$ forgot-password-mail-send-status.php
+RewriteRule ^JoinMe?$ add_user.php
+RewriteRule ^VerifyMail?$ mail_verify.php
+RewriteRule ^Recharge?$ recharge_form.php
+RewriteRule ^Waiting?$ pgRedirect.php
+RewriteRule ^Response?$ pgResponse.php
+RewriteRule ^Pay?$ pay_friend.php
+RewriteRule ^AddCart?$ add_cart.php
+RewriteRule ^PhoneCheak?$ phone_cheak_ajaxData.php
+RewriteRule ^Minus?$ add_minus.php
+RewriteRule ^Buy?$ buy_now.php
+RewriteRule ^Out?$ logout.php
+RewriteRule ^Vend?$ vend_now.php
+RewriteRule ^Delivery?$ delivery_address.php
