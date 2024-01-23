@@ -197,8 +197,8 @@ if (isset($_SESSION['vm_user']))
         <h2>Sign in</h2>
         <form action="verify.php" method="post">
             <div class="user-box">
-                <input type="text" name="email" required="" value="<?php if (isset($_SESSION['email'])) echo $_SESSION['email']; ?>" autocomplete="">
-                <label>Email</label>
+                <input type="text" name="phone" required="" value="<?php if (isset($_SESSION['phone'])) echo $_SESSION['phone']; ?>" autocomplete="">
+                <label>Phone</label>
             </div>
             <div class="user-box">
                 <input type="password" name="password" required="" value="<?php if (isset($_SESSION['password'])) echo $_SESSION['password']; ?>" autocomplete="">

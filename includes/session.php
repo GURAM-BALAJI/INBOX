@@ -26,7 +26,7 @@ if (!isset($_SESSION['vm_user'])) {
 }
 if (isset($_SESSION['vm_user'])) {
 	try {
-		$stmt = $conn->prepare("SELECT user_amount,user_id,user_photo,name,user_email,user_password,user_phone FROM users WHERE user_id=:id");
+		$stmt = $conn->prepare("SELECT user_id,name,user_password,user_phone FROM users WHERE user_id=:id");
 		$stmt->execute(['id' => $_SESSION['vm_id']]);
 		$user = $stmt->fetch();
 	} catch (PDOException $e) {

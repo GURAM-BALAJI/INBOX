@@ -2,13 +2,12 @@
 include 'includes/session.php';
 $conn = $pdo->open();
 if (isset($_POST['login'])) {
-	$_SESSION['email'] = $email = test_input($_POST['email']);
+	$_SESSION['phone'] = $phone = test_input($_POST['phone']);
 	$_SESSION['password'] = $password = test_input($_POST['password']);
-	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		try {
 			date_default_timezone_set('Asia/Kolkata');
-			$stmt = $conn->prepare("SELECT user_attempts,user_login_time,user_email,user_status,user_password,user_id,COUNT(*) AS numrows FROM users WHERE user_email = :email");
-			$stmt->execute(['email' => $email]);
+			$stmt = $conn->prepare("SELECT user_attempts,user_login_time,user_phone,user_status,user_password,user_id,COUNT(*) AS numrows FROM users WHERE user_phone = :phone");
+			$stmt->execute(['phone' => $phone]);
 			$row = $stmt->fetch();
 			if ($row['numrows'] > 0) {
 				if ($row['user_status']) {
@@ -33,7 +32,7 @@ if (isset($_POST['login'])) {
 								}
 								setcookie('keep_id', $sessionss_cookies_id, time() + 60 * 60 * 24 * 30);
 							}
-							unset($_SESSION['email']);
+							unset($_SESSION['phone']);
 							unset($_SESSION['password']);
 						} else {
 							if ($row['user_attempts'] >= 3) {
@@ -44,7 +43,7 @@ if (isset($_POST['login'])) {
 							} else {
 								$stmt = $conn->prepare("UPDATE users SET user_attempts=:user_attempts WHERE user_id=:id");
 								$stmt->execute(['user_attempts' => $row['user_attempts'] + 1, 'id' => $row['user_id']]);
-								$_SESSION['error'] = 'Incorrect Email Or Password.';
+								$_SESSION['error'] = 'Incorrect phone Or Password.';
 							}
 						}
 					} else {
@@ -54,14 +53,11 @@ if (isset($_POST['login'])) {
 					$_SESSION['error'] = 'Account not activated.';
 				}
 			} else {
-				$_SESSION['error'] = 'Incorrect Email Or Password.';
+				$_SESSION['error'] = 'Incorrect phone Or Password.';
 			}
 		} catch (PDOException $e) {
 			$_SESSION['error'] = "Something went wrong. ";
 		}
-	} else {
-		$_SESSION['error'] = "Invalid email format.";
-	}
 } else {
 	$_SESSION['error'] = 'Input login credentails first';
 }
