@@ -5,10 +5,10 @@ $conn = $pdo->open();
 if (isset($_POST['login'])) {
 	$contact = test_input($_POST['phone']);
 	$password = test_input($_POST['password']);
-	if ($contact){
+	if ($contact) {
 		try {
-			$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM admin WHERE admin_phone = :contact");
-			$stmt->execute(['contact' => $contact]);
+			$stmt = $conn->prepare("SELECT *, COUNT(*) AS numrows FROM admin WHERE admin_phone = :contact AND admin_type=:admin_type");
+			$stmt->execute(['contact' => $contact, 'admin_type' => 1]);
 			$row = $stmt->fetch();
 			if ($row['numrows'] > 0) {
 				if ($row['admin_status']) {

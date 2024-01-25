@@ -258,7 +258,7 @@ include 'includes/header.php';
                             </tr>
                             <tr>
                                 <td colspan='3'>
-                                    <a href="Delivery">
+                                    <a href="Address">
                                         <button
                                             style="width:95%;height:50px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;border-radius:25px;"
                                             class="btn btn-success btn-sm btn-flat">

@@ -13,13 +13,7 @@ include 'includes/header.php';
 </head>
 <style>
     body {
-        background:
-            <?php if (isset($_COOKIE["theme"]))
-                echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
-            else
-                echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
-            ?>
-        ;
+      
         font-family: 'Roboto', sans-serif;
     }
 
@@ -162,7 +156,7 @@ include 'includes/header.php';
 
     .outer-container {
         max-width: 1000px;
-        margin: 0 auto;
+        margin-top: -30px;
         box-sizing: border-box;
     }
 
@@ -179,6 +173,7 @@ include 'includes/header.php';
         /* Four kitchens per row */
         box-sizing: border-box;
         padding: 10px;
+        padding-bottom: 0px;
         /* Adjusted padding to account for margin */
         border: 2px solid #ccc;
         /* Border for each kitchen */
@@ -195,8 +190,6 @@ include 'includes/header.php';
         height: 150px;
         object-fit: cover;
         border-radius: 10px;
-        /* Box shadow for each image */
-        box-shadow: 0px 10px 10px rgba(183, 178, 178, 0.945);
         transition: opacity 0.3s ease-in-out;
     }
 
@@ -213,15 +206,12 @@ include 'includes/header.php';
     @media (max-width: 500px) {
         .inner-container {
             margin: 0.7%;
-            /* Remove negative margin on smaller screens */
         }
 
         .kitchen {
             flex: 0 0 48%;
             /* One kitchen per row on smaller screens */
             margin: 1%;
-            /* Adjusted margin for space between kitchens in mobile view */
-
         }
 
         /* Adjust styles for images in smaller screens if needed */
@@ -230,8 +220,6 @@ include 'includes/header.php';
             height: 150px;
             object-fit: cover;
             border-radius: 8px;
-            /* Box shadow for each image */
-            box-shadow: 0px 10px 10px rgba(183, 178, 178, 0.945);
         }
 
     }
@@ -321,6 +309,7 @@ include 'includes/header.php';
         <?php if (!isset($_GET['meal_type'])) { ?>
             <div class="outer-container">
                 <div class="inner-container">
+                    
                     <div class="kitchen">
                         <a href="MyHome?meal_type=1">
                             <img src="menu_img/Breakfast.jpg" alt="Kitchen 1">

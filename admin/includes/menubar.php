@@ -42,11 +42,10 @@
         </ul>
       </li>
       <li class="header">MANAGE</li>
-      <li><a href="../users/users.php"><i class="fa fa-users"></i><span>Users</span></a></li>
       <li><a href="../orders/orders_histroy.php"><i class="fa fa-shopping-bag"></i><span>Orders History</span></a></li>
       <li><a href="../orders/orders.php"><i class="fa fa-shopping-cart"></i> <span>Present Orders</span></a></li>
       <li><a href="../items/items.php"><i class="fa fa-tasks"></i> <span>Active Items</span></a></li>
-      <li><a href="../slogan/slogan.php"><i class="fa fa-comments-o"></i> <span>Slogan</span></a></li>
+      <li><a href="../category/category.php"><i class="fa fa-arrows-alt"></i> <span>category</span></a></li>
       <li><a href="../admin/admin.php"><i class="fa fa-grav"></i> <span>Admin</span></a></li>
       <li><a href="../message/message.php"><i class="fa fa-comment"></i> <span>Message</span></a></li>
 

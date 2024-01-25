@@ -10,11 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = test_input($_POST["phone"]);
     $landmark = test_input($_POST["address-line-1"]);
     $address = test_input($_POST["address-line-2"]);
-
+    $name=test_input($_POST["Name"]);
+   
     try {
-        $stmt = $conn->prepare("INSERT INTO address_details (phone, Landmark, address,user_id) VALUES (:phone, :landmark, :address, :user_id)");
-        $stmt->execute(['phone' => $phone, 'landmark' => $landmark, 'address' => $address, 'user_id' => $id]);
-        header('location: payment.php');
+        $stmt = $conn->prepare("INSERT INTO address_details (phone, Landmark, address,user_id,user_name) VALUES (:phone, :landmark, :address, :user_id , :user_name)");
+        $stmt->execute(['phone' => $phone, 'landmark' => $landmark, 'address' => $address, 'user_id' => $id,'user_name'=>$name]);
+        header('location: Payment\payment.php');
         exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -141,8 +142,11 @@ $pdo->close();
         <!-- Step 1: Delivery Address -->
         <div id="delivery-address-form" class="form-container active">
             <form method="post" action="">
+            <label for="Name">Name</label>
+                <input type="text" placeholder="Enter Your name." id="Name"
+                name="Name" required>
                 <label for="phone">Phone</label>
-                <input type="text" placeholder="Enter Phone" id="phone" name="phone" required>
+                <input type="text" placeholder="Enter Your Phone Number" id="phone" name="phone" required>
 
                 <label for="address-line-1">Land Mark</label>
                 <input type="text" placeholder="Enter Flat No/Appartment Name/House No" id="address-line-1"
@@ -151,10 +155,9 @@ $pdo->close();
                 <label for="address-line-2">Address</label>
                 <input type="text" placeholder="Enter Area/Street/Land Mark" id="address-line-2" name="address-line-2">
 
-                <button onclick="nextStep()">Last Step</button>
+                <button onclick="makePaymentAndRedirect()">Last Step</button>
             </form>
         </div>
-
     </div>
 
 

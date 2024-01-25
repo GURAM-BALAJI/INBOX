@@ -23,4 +23,4 @@ RewriteRule ^Minus?$ add_minus.php
 RewriteRule ^Buy?$ buy_now.php
 RewriteRule ^Out?$ logout.php
 RewriteRule ^Vend?$ vend_now.php
-RewriteRule ^Delivery?$ delivery_address.php
+RewriteRule ^Address?$ delivery_address.php

@@ -12,10 +12,10 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Active Items
+        Active Items
         </h1>
         <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">Manage</li>
           <li class="active">Active Items</li>
         </ol>
@@ -49,14 +49,14 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
+                
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>ID</th>
+                    <th>ID</th>
                       <th>Image</th>
                       <th>Name</th>
                       <th>Cost</th>
-                      <th>Chef Name</th>
                       <th>Catogory</th>
                       <th>Meal Type</th>
                       <th>Added Date</th>
@@ -65,8 +65,8 @@
                       <?php
                       $conn = $pdo->open();
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete AND item_status=:item_status");
-                        $stmt->execute(['items_delete' => 0, 'item_status' => 1]);
+                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete AND item_status=:item_status AND item_chef_id=:item_chef_id");
+                        $stmt->execute(['items_delete' => 0, 'item_status' => 1, 'item_chef_id'=> $_SESSION['vm_id_admin']]);
                         foreach ($stmt as $row) {
                           $image = (!empty($row['items_image'])) ? '../../items_images/' . $row['items_image'] : '../../items_images/noimage.jpg';
                           echo "<tr>";
@@ -76,12 +76,6 @@
                           echo "</td>
                             <td>" . $row['items_name'] . "</td>
                             <td>" . $row['items_cost'] . "</td>";
-                          echo "<td>";
-                          $stmt1 = $conn->prepare("SELECT admin_name FROM admin WHERE admin_id =:given_id");
-                          $stmt1->execute(['given_id' => $row['item_chef_id']]);
-                          foreach ($stmt1 as $row1)
-                            echo $row1['admin_name'];
-                          echo "</td>";
                           switch ($row['item_category']) {
                             case 0:
                               $label = 'Veg';
@@ -133,8 +127,12 @@
           </div>
         </div>
       </section>
+      <!-- Add -->
     </div>
   </div>
+  <!-- ./wrapper -->
+
+  <?php include '../includes/scripts.php'; ?>
 </body>
 
 </html>

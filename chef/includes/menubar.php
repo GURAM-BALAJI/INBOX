@@ -16,9 +16,9 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
-      <li><a href="../home/home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li class="header">MANAGE</li>
-      <li><a href="../orders/orders.php"><i class="fa fa-shopping-cart"></i> <span>Present Orders</span></a></li>
+      <li><a href="../orders/orders.php"><i class="fa fa-shopping-cart"></i> <span>Orders</span></a></li>
+      <li><a href="../accepted_orders/accepted_orders.php"><i class="fa fa-check-circle"></i> <span>Accepted Orders</span></a></li>
+      <li><a href="../not_accepted_orders/not_accepted_orders.php"><i class="fa fa-times-circle "></i> <span>Not Accepted Orders</span></a></li>
       <li><a href="../items_active/items_active.php"><i class="fa fa-tasks"></i> <span>Active Items</span></a></li>
       <li><a href="../items/items.php"><i class="fa fa-tasks"></i> <span>Items</span></a></li>
 

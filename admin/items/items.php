@@ -12,10 +12,10 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Active Items
+        Active Items
         </h1>
         <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">Manage</li>
           <li class="active">Active Items</li>
         </ol>
@@ -49,10 +49,11 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
+                
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>ID</th>
+                    <th>ID</th>
                       <th>Image</th>
                       <th>Name</th>
                       <th>Cost</th>
@@ -64,12 +65,12 @@
                     <tbody>
                       <?php
                       $conn = $pdo->open();
-
                       try {
                         $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete AND item_status=:item_status");
                         $stmt->execute(['items_delete' => 0, 'item_status' => 1]);
                         foreach ($stmt as $row) {
                           $image = (!empty($row['items_image'])) ? '../../items_images/' . $row['items_image'] : '../../items_images/noimage.jpg';
+                          echo "<tr>";
                           echo "<td>" . $row['items_id'] . "</td>
                         <td>
                           <img src='" . $image . "' height='30px' width='30px'>";
@@ -94,7 +95,6 @@
                               break;
                           }
                           echo "<td>" . htmlspecialchars($label) . "</td>";
-
                           switch ($row['item_meal_type']) {
                             case 1:
                               $label2 = 'Breakfast';
@@ -115,7 +115,6 @@
                               $label2 = 'Unknown';
                               break;
                           }
-
                           echo "<td>" . htmlspecialchars($label2) . "</td>";
                           echo "<td>" . $row['items_add_date'] . "</td>";
                           echo "</tr>
@@ -135,9 +134,55 @@
           </div>
         </div>
       </section>
+      <!-- Add -->
+
 
     </div>
+    <?php include 'items_modal.php'; ?>
+
   </div>
+  <!-- ./wrapper -->
+
+  <?php include '../includes/scripts.php'; ?>
+  <script>
+    $(function () {
+      $(document).on('click', '.delete', function (e) {
+        e.preventDefault();
+        $('#delete').modal('show');
+        var id = $(this).data('id');
+        $('.catid').val(id);
+        getRow(id);
+      });
+
+    });
+    $(document).on('click', '.status', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      $('.itemstatus').val(id);
+      getRow(id);
+    });
+
+    function getRow(id) {
+      $.ajax({
+        type: 'POST',
+        url: 'items_row.php',
+        data: {
+          id: id
+        },
+        dataType: 'json',
+        success: function (response) {
+          $('.catid').val(response.items_id);
+          $('.itemname').html(response.items_name);
+          $('.itemstatus1').val(response.items_id);
+          $('.itemstatus2').val(response.items_id);
+          $('.itemname1').html(response.items_name);
+          $('.itemname2').html(response.items_name);
+
+
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>
