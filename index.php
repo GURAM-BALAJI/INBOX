@@ -307,9 +307,9 @@ include 'includes/header.php';
     </section>
     <?php
     $i = 0;
-    if (isset($_SESSION['vm_id'])) {
+    if (isset($_SESSION['inbox_id'])) {
         $stmt = $conn->prepare("SELECT COUNT(*) as count FROM cart WHERE cart_user_id=:user_id");
-        if ($stmt->execute(['user_id' => $_SESSION['vm_id']]))
+        if ($stmt->execute(['user_id' => $_SESSION['inbox_id']]))
             $result = $stmt->fetch();
         if ($result !== false)
             $i = $result['count'];

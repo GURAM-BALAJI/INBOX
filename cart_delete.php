@@ -6,7 +6,7 @@
 	$output = array('error'=>false);
 	$id = test_input($_POST['id']);
 
-	if(isset($_SESSION['vm_user'])){
+	if(isset($_SESSION['inbox_id'])){
 		try{
 			$stmt = $conn->prepare("DELETE FROM cart WHERE id=:id");
 			$stmt->execute(['id'=>$id]);

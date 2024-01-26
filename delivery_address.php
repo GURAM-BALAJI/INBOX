@@ -4,7 +4,7 @@ include 'includes/session.php';
 $conn = $pdo->open();
 
 // Assuming you've retrieved user ID as $id
-$id = $_SESSION['vm_id'];
+$id = $_SESSION['inbox_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = test_input($_POST["phone"]);

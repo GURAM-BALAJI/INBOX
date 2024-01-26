@@ -51,8 +51,8 @@ include 'includes/header.php';
 
         <div style="background-color: #001a35;color: #89E6C4;">CART</div>
         <?php
-        if (isset($_SESSION['vm_user'])) {
-            $user_id = $_SESSION['vm_id'];
+        if (isset($_SESSION['inbox_id'])) {
+            $user_id = $_SESSION['inbox_id'];
             $conn = $pdo->open();
             $stmt = $conn->prepare("SELECT * FROM message");
             $stmt->execute();

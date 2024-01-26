@@ -2,7 +2,7 @@
 include 'includes/session.php';
     $cart_items_id = test_input($_POST['id']);
     $return_id = test_input($_POST['return_id']);
-    $cart_user_id = $_SESSION['vm_id'];
+    $cart_user_id = $_SESSION['inbox_id'];
     //Sanitizing inputs.
     if ($cart_items_id > 0 && $cart_user_id > 0) {
         $conn = $pdo->open();

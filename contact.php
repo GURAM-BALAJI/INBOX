@@ -174,9 +174,9 @@ function validateMobileNumber($mobile)
     <a href="MyCart" class="nav__link">
       <?php
       $i = 0;
-      if (isset($_SESSION['vm_id'])) {
+      if (isset($_SESSION['inbox_id'])) {
         $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-        $stmt->execute(['user_id' => $_SESSION['vm_id']]);
+        $stmt->execute(['user_id' => $_SESSION['inbox_id']]);
         foreach ($stmt as $row)
           $i++;
       ?>

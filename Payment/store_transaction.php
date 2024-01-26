@@ -16,7 +16,7 @@ $action = isset($_POST['action']) ? $_POST['action'] : ''; // New action paramet
 
 date_default_timezone_set('Asia/Kolkata');
 $today = date('Y-m-d h:i:s a');
-$id = $_SESSION['vm_id'];
+$id = $_SESSION['inbox_id'];
 // Store the transaction in the database
 $conn = $pdo->open();
 

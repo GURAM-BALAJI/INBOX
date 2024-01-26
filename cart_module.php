@@ -4,7 +4,7 @@ history list
 2-cancel.
 3-time out.
 -->
-<?php if (isset($_SESSION['vm_user'])) { ?>
+<?php if (isset($_SESSION['inbox_id'])) { ?>
     <div class="modal fade" id="history">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -16,7 +16,7 @@ history list
                 <div class="modal-body">
                     <center>
                         <?php
-                        $id = $_SESSION['vm_id'];
+                        $id = $_SESSION['inbox_id'];
 
                         //Sanitizing inputs.
                         if ($id > 0) {
