@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = test_input($_POST["phone"]);
     $landmark = test_input($_POST["address-line-1"]);
     $address = test_input($_POST["address-line-2"]);
-    $name=test_input($_POST["Name"]);
+    $name=test_input($_POST["userame"]);
    
     try {
         $stmt = $conn->prepare("INSERT INTO address_details (phone, Landmark, address,user_id,user_name) VALUES (:phone, :landmark, :address, :user_id , :user_name)");
@@ -143,8 +143,8 @@ $pdo->close();
         <div id="delivery-address-form" class="form-container active">
             <form method="post" action="">
             <label for="Name">Name</label>
-                <input type="text" placeholder="Enter Your name." id="Name"
-                name="Name" required>
+                <input type="text" placeholder="Enter Your name." id="userame"
+                name="userame" required>
                 <label for="phone">Phone</label>
                 <input type="text" placeholder="Enter Your Phone Number" id="phone" name="phone" required>
 

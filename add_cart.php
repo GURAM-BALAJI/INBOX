@@ -1,7 +1,5 @@
 <?php
 include 'includes/session.php';
-include './includes/req_start.php';
-if ($req_per == 1) {
     $cart_items_id = test_input($_POST['id']);
     $return_id = test_input($_POST['return_id']);
     $cart_user_id = $_SESSION['vm_id'];
@@ -31,5 +29,4 @@ if ($req_per == 1) {
     } else {
         $_SESSION['error'] = 'Wrong Inputs.';
     }
-}
 header('location: MyHome?meal_type='.$return_id);

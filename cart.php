@@ -8,31 +8,14 @@ include 'includes/header.php';
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>Vending Machine</title>
-    <link rel="stylesheet" href="./style_nav_bar.css">
-
+    <title>Inbox - Cart</title>
 </head>
 <style>
     body {
-        background:
-            <?php if (isset($_COOKIE["theme"]))
-                echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
-            else
-                echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
-            ?>
-        ;
+    
         font-family: 'Roboto', sans-serif;
     }
-    .nav__link--active {
-        color:
-            <?php if (isset($_COOKIE["theme"]))
-                echo "#38b6ff";
-            else
-                echo "rgba(254, 191, 1, 1)";
-            ?>
-        ;
-    }
-
+    
     hr {
         display: block;
         margin-top: 0.5em;
@@ -43,49 +26,6 @@ include 'includes/header.php';
         border-width: 2px;
         color: #0E2231;
         width: 98%;
-    }
-
-    h5 {
-        margin-left: 10px;
-        color: darkgreen;
-        font-family: bold;
-    }
-
-    .hr_last {
-        border-style: dot-dash;
-        border-width: 4px;
-        color: #181914;
-        width: 98%;
-    }
-
-    div.scrollmenu {
-        background-color: #333;
-        overflow: auto;
-        white-space: nowrap;
-    }
-
-    div.scrollmenu a {
-        display: inline-block;
-        text-align: center;
-        padding: 14px;
-        color: white;
-        text-decoration: none;
-        text-decoration-color: snow;
-    }
-
-    .back_ground {
-        background-color: #777;
-
-    }
-
-    div.scrollmenu a:hover {
-        background-color: #777;
-    }
-
-    p {
-        float: right;
-        color: darkgray;
-        margin-top: -10px;
     }
 
     table {
@@ -100,37 +40,9 @@ include 'includes/header.php';
         text-align: center;
         padding: 3px;
     }
-
-    .vend_btn {
-        display: inline-block;
-        padding: 5px 100px 5px 100px;
-        font-size: 12px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        outline: none;
-        color: #fff;
-        background-color: orange;
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 5px #999;
-        margin-bottom: 7px;
-    }
-
-    .vend_btn:hover {
-        background-color: #3e8e41
-    }
-
-    .vend_btn:active {
-        background-color: #3e8e41;
-        box-shadow: 0 3px #666;
-        transform: translateY(4px);
-    }
 </style>
 
 <body>
-    <!-- partial:index.partial.html -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <center>
         <div style="background-color: #333;">
             <img src="logo.png" width="100%" height="70px">
@@ -270,109 +182,13 @@ include 'includes/header.php';
                         <?php }
                         ?>
                     </table>
-                    <?php if ($i == 0) {
-                        echo "<center>"; ?>
-                        <?php
-                        try {
-                            $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
-                            $stmt->execute(); ?>
-                            <h4 style="font-size:30px;font-family: cursive;text-transform: capitalize;">
-                                <?php
-                                foreach ($stmt as $row)
-                                    echo $row['slogan_sentance']; ?>
-                            </h4>
-                        <?php } catch (PDOException $e) {
-                            $_SESSION['error'] = "Something Went Wrong.";
-                        }
-                        $pdo->close();
-                        echo "<img src='./images/hunger.png'>";
-                        echo "<h2 style='font-family: cursive;'>Order Somthing..</h2></center>";
-                    }
-                    ?>
                 </div>
             </div>
         </section>
-    <?php } else { ?>
-        <center style="margin-top:20rem;">
-            <?php
-            $conn = $pdo->open();
-            try {
-                $stmt = $conn->prepare("SELECT * FROM slogan ORDER BY RAND() LIMIT 1");
-                $stmt->execute(); ?>
-                <h4 style="color:red;font-size:30px;font-family: cursive;text-transform: capitalize;">
-                    <?php
-                    foreach ($stmt as $row)
-                        echo $row['slogan_sentance']; ?>
-                </h4>
-            <?php } catch (PDOException $e) {
-                $_SESSION['error'] = "Something Went Wrong.";
-            }
-            $pdo->close(); ?>
-            <a href="LogMe">
-                <button
-                    style=" background-color: #d24026; border: none; color: white; padding: 18px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 10px;">
-                    LOGIN</button>
-            </a>
+    <?php }?>
 
-        </center>
-    <?php } ?>
-    <br><br><br><br>
-    <nav class="nav">
-
-        <a href="MyHome" class="nav__link ">
-            <i class="material-icons nav__icon">home</i>
-            <span class="nav__text">Home</span>
-        </a>
-
-        <a href="MyProfile" class="nav__link">
-            <i class="material-icons nav__icon">person</i>
-            <span class="nav__text">Profile</span>
-        </a>
-
-        <a href="MyCart" class="nav__link nav__link--active">
-            <?php
-            $i = 0;
-            if (isset($_SESSION['vm_id'])) {
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
-                foreach ($stmt as $row)
-                    $i++;
-                ?>
-
-            <?php } ?>
-            <div class="container_cart">
-                <i class="material-icons nav__icon">shopping_cart</i>
-                <?php if ($i != 0) { ?>
-                    <span class="badge_cart">
-                        <?php echo $i; ?>
-                    </span>
-                <?php } ?>
-            </div>
-            <span class="nav__text">Cart</span>
-        </a>
-
-        <a href="MySettings" class="nav__link">
-            <i class="material-icons nav__icon">settings</i>
-            <span class="nav__text">Settings</span>
-        </a>
-
-    </nav>
 
 </body>
 <?php include './cart_module.php'; ?>
 <?php include 'includes/scripts.php'; ?>
-<script>
-    $(function () {
-        $(document).on('click', '.buy', function (e) {
-            e.preventDefault();
-            $('#buy').modal('show');
-        });
-        $(document).on('click', '.history', function (e) {
-            e.preventDefault();
-            $('#history').modal('show');
-        });
-    });
-</script>
-<?php include './includes/req_end.php'; ?>
-
 </html>

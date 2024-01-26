@@ -45,6 +45,7 @@
       <li><a href="../orders/orders_histroy.php"><i class="fa fa-shopping-bag"></i><span>Orders History</span></a></li>
       <li><a href="../orders/orders.php"><i class="fa fa-shopping-cart"></i> <span>Present Orders</span></a></li>
       <li><a href="../items/items.php"><i class="fa fa-tasks"></i> <span>Active Items</span></a></li>
+      <li><a href="../transaction_history/transaction_history.php"><i class="fa fa-list-alt"></i> <span>Transaction History</span></a></li>
       <li><a href="../category/category.php"><i class="fa fa-arrows-alt"></i> <span>category</span></a></li>
       <li><a href="../admin/admin.php"><i class="fa fa-grav"></i> <span>Admin</span></a></li>
       <li><a href="../message/message.php"><i class="fa fa-comment"></i> <span>Message</span></a></li>

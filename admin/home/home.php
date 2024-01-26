@@ -69,23 +69,6 @@ include '../includes/header.php'; ?>
               </div>
             </div>
 
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-yellow">
-                <div class="inner">
-                  <?php
-                  echo "<h6>Active User's: " . htmlentities($row['logs_active_users'] - $row['logs_inactive_users']) . "</h6>";
-                  echo "<h6>In-Active User's:" . htmlentities($row['logs_inactive_users']) . "</h6>";
-                  echo "<h6>Total User's:" . htmlentities($row['logs_active_users']) . "</h6>";
-                  ?>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-users"></i>
-                </div>
-                <a href="../users/users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
               <div class="small-box bg-gray">

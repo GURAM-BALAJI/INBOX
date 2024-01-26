@@ -17,7 +17,6 @@ $action = isset($_POST['action']) ? $_POST['action'] : ''; // New action paramet
 date_default_timezone_set('Asia/Kolkata');
 $today = date('Y-m-d h:i:s a');
 $id = $_SESSION['vm_id'];
-
 // Store the transaction in the database
 $conn = $pdo->open();
 
@@ -29,16 +28,15 @@ $address_id = null; // Initialize $address_id
 foreach ($stmt_check11 as $row) {
     $address_id = $row['address_id'];
 }
-
 if ($action === 'store') {
     // Insert into orders table
     $stmt_orders = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_address_id) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_address_id)");
-
+ 
     // Delete cart entries
     $stmt_delete_cart = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
 
     // Insert into transaction table
-    $stmt_transaction = $conn->prepare("INSERT INTO transaction (transaction_id, transaction_user_id, transaction_amount, transaction_date, transaction_status, address_id) VALUES (:transaction_id, :transaction_user_id,  :transaction_amount, :transaction_date, :transaction_status, :address_id)");
+
 
     // Process the data for storing the transaction
     if ($stmt_check = $conn->prepare("SELECT * FROM cart left join items on items_id=cart_items_id WHERE cart_user_id=:cart_user_id")) {
@@ -49,11 +47,10 @@ if ($action === 'store') {
         }
 
         $stmt_delete_cart->execute(['id' => $id]);
-
+        $stmt_transaction = $conn->prepare("INSERT INTO transaction (transaction_id, transaction_user_id, transaction_amount, transaction_date, transaction_status, transaction_address_id) VALUES (:transaction_id, :transaction_user_id,  :transaction_amount, :transaction_date, :transaction_status, :address_id)");
         $stmt_transaction->execute(['transaction_id' => $payment_id, 'transaction_user_id' => $id, 'transaction_amount' => $amount,  'transaction_date' => $today, 'transaction_status' => 'TXN_Success', 'address_id' => $address_id]);
+        $pdo->close();
 
-        // No need to redirect here, as it's handled in payment.php
-        $conn->close();
     } else {
         // Log the error or display an error message
         error_log("Error in preparing SQL statement.");
@@ -63,11 +60,11 @@ if ($action === 'store') {
     }
 } elseif ($action === 'cancel') {
     // Process the data for canceling the payment
-    $stmt_transaction = $conn->prepare("INSERT INTO transaction (transaction_id, transaction_user_id, transaction_amount, transaction_date, transaction_status, address_id) VALUES (:transaction_id, :transaction_user_id,  :transaction_amount, :transaction_date, :transaction_status, :address_id)");
+    $stmt_transaction = $conn->prepare("INSERT INTO transaction (transaction_id, transaction_user_id, transaction_amount, transaction_date, transaction_status, transaction_address_id) VALUES (:transaction_id, :transaction_user_id,  :transaction_amount, :transaction_date, :transaction_status, :address_id)");
 
     $stmt_transaction->execute(['transaction_id' => $payment_id, 'transaction_user_id' => $id, 'transaction_amount' => $amount,  'transaction_date' => $today, 'transaction_status' => 'TXN_Cancelled', 'address_id' => $address_id]);
 
-    $conn->close();
+    $pdo->close();
     // No need to redirect here, as it's handled in payment.php
 } else {
     // Invalid action parameter

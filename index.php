@@ -7,24 +7,12 @@ include 'includes/header.php';
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>Vending Machine</title>
-    <link rel="stylesheet" href="./style_nav_bar.css">
-
+    <title>Inbox</title>
 </head>
 <style>
     body {
-      
-        font-family: 'Roboto', sans-serif;
-    }
 
-    .nav__link--active {
-        color:
-            <?php if (isset($_COOKIE["theme"]))
-                echo "#38b6ff";
-            else
-                echo "rgba(254, 191, 1, 1)";
-            ?>
-        ;
+        font-family: 'Roboto', sans-serif;
     }
 
     hr {
@@ -37,121 +25,6 @@ include 'includes/header.php';
         border-width: 2px;
         color: #0E2231;
         width: 98%;
-    }
-
-    h5 {
-        margin-left: 10px;
-        color: darkgreen;
-        font-family: bold;
-    }
-
-    .hr_last {
-        border-style: dot-dash;
-        border-width: 4px;
-        color: #181914;
-        width: 98%;
-    }
-
-    div.scrollmenu {
-        background-color: #333;
-        overflow: auto;
-        white-space: nowrap;
-    }
-
-    div.scrollmenu a {
-        display: inline-block;
-        text-align: center;
-        padding: 14px;
-        color: white;
-        text-decoration: none;
-        text-decoration-color: snow;
-    }
-
-    .back_ground {
-        background-color: #777;
-
-    }
-
-    div.scrollmenu a:hover {
-        background-color: #777;
-    }
-
-    p {
-        float: right;
-        color: darkgray;
-        margin-top: -10px;
-    }
-
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-        border: 2px solid #fff;
-        border-radius: 25px;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(254, 191, 1, 1);
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: #fff;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked+.slider {
-        background-color: #38b6ff;
-    }
-
-    input:focus+.slider {
-        box-shadow: 0 0 1px #000;
-    }
-
-    input:checked+.slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
-
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
-
-    .container123456 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .column123 {
-        text-align: center;
     }
 
     .outer-container {
@@ -184,7 +57,6 @@ include 'includes/header.php';
         /* Added relative positioning */
     }
 
-    /* Adjust styles based on your design preferences */
     .kitchen img {
         width: 100%;
         height: 150px;
@@ -227,11 +99,56 @@ include 'includes/header.php';
     h2:hover {
         color: orange;
     }
+
+    #cart-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 10px;
+        font-size: 50px;
+        color: #000;
+        color: '#0f0f0f';
+        animation: moveCart 2s linear infinite;
+    }
+
+    @keyframes moveCart {
+        0% {
+            transform: translateX();
+        }
+
+        50% {
+            transform: translateX(-20px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .badge_cart {
+        position: absolute;
+        width: 1.1em;
+        height: 1.1em;
+        font-size: 20px;
+        margin-left: 30px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background-color: rgb(255, 75, 75);
+        color: white;
+    }
+
+    .cartimag {
+        text-decoration: none;
+        font-size: 60px;
+    }
+
 </style>
 
 <body>
     <!-- partial:index.partial.html -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <center>
         <div style="background-color: #333;">
             <img src="logo.png" width="100%" height="70px">
@@ -309,47 +226,26 @@ include 'includes/header.php';
         <?php if (!isset($_GET['meal_type'])) { ?>
             <div class="outer-container">
                 <div class="inner-container">
-                    
-                    <div class="kitchen">
-                        <a href="MyHome?meal_type=1">
-                            <img src="menu_img/Breakfast.jpg" alt="Kitchen 1">
-                            <center>
-                                <h2>Breakfast</h2>
-                            </center>
-                        </a>
-                    </div>
-                    <div class="kitchen">
-                        <a href="MyHome?meal_type=2">
-                            <img src="menu_img/Lunch.jpeg" alt="Kitchen 2">
-                            <center>
-                                <h2>Lunch</h2>
-                            </center>
-                        </a>
-                    </div>
-                    <div class="kitchen">
-                        <a href="MyHome?meal_type=3">
-                            <img src="menu_img/Dinner.jpeg" alt="Kitchen 3">
-                            <center>
-                                <h2>Dinner</h2>
-                            </center>
-                        </a>
-                    </div>
-                    <div class="kitchen">
-                        <a href="MyHome?meal_type=4">
-                            <img src="menu_img/Singles.jpg" alt="Kitchen 4">
-                            <center>
-                                <h2>Singles</h2>
-                            </center>
-                        </a>
-                    </div>
-                    <div class="kitchen">
-                        <a href="MyHome?meal_type=5">
-                            <img src="menu_img/Snacks.jpg" alt="Kitchen 5">
-                            <center>
-                                <h2>Snacks</h2>
-                            </center>
-                        </a>
-                    </div>
+                    <?php
+                    $stmt_categories = $conn->query("SELECT *FROM category");
+
+                    while ($row = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
+                        $image = (!empty($row['category_image'])) ? 'category_images/' . $row['category_image'] : 'category_images/noimage.jpg';
+                        ?>
+                        <div class="kitchen">
+                            <a href="MyHome?meal_type=<?php echo $row['category_id']; ?>">
+
+                                <img src="<?php echo $image ?>" alt="<?php echo $row['category_name']; ?> ">
+                                <center>
+                                    <h2>
+                                        <?php echo $row['category_name']; ?>
+                                    </h2>
+                                </center>
+                            </a>
+                        </div>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
         <?php } else { ?>
@@ -409,66 +305,29 @@ include 'includes/header.php';
             </div>
         <?php } ?>
     </section>
+    <?php
+    $i = 0;
+    if (isset($_SESSION['vm_id'])) {
+        $stmt = $conn->prepare("SELECT COUNT(*) as count FROM cart WHERE cart_user_id=:user_id");
+        if ($stmt->execute(['user_id' => $_SESSION['vm_id']]))
+            $result = $stmt->fetch();
+        if ($result !== false)
+            $i = $result['count'];
+        ?>
 
-    <br><br><br><br>
-    <nav class="nav">
-
-        <a href="MyHome" class="nav__link nav__link--active">
-            <i class="material-icons nav__icon">home</i>
-            <span class="nav__text">Home</span>
-        </a>
-
-        <a href="MyProfile" class="nav__link">
-            <i class="material-icons nav__icon">person</i>
-            <span class="nav__text">Profile</span>
-        </a>
-
-        <a href="MyCart" class="nav__link">
-            <?php
-            $i = 0;
-            if (isset($_SESSION['vm_id'])) {
-                $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-                $stmt->execute(['user_id' => $_SESSION['vm_id']]);
-                foreach ($stmt as $row)
-                    $i++;
-                ?>
-
-            <?php }
-            $pdo->close(); ?>
-            <div class="container_cart">
-                <i class="material-icons nav__icon">shopping_cart</i>
-                <?php if ($i != 0) { ?>
-                    <span class="badge_cart">
-                        <?php echo $i; ?>
-                    </span>
-                <?php } ?>
-            </div>
-            <span class="nav__text">Cart</span>
-        </a>
-
-        <a href="MySettings" class="nav__link">
-            <i class="material-icons nav__icon">settings</i>
-            <span class="nav__text">Settings</span>
-        </a>
-
-    </nav>
-    <!-- partial -->
-
+        <div id="cart-icon">
+            <?php if ($i != 0) { ?>
+                <p class="badge_cart">
+                    <?php echo $i; ?>
+                </p>
+                <?php
+            } ?>
+            <a class="cartimag" href="MyCart">🍽️</a>
+          
+        </div>
+        <?php
+    } ?>
 </body>
 <?php include 'includes/scripts.php'; ?>
-<?php include './includes/req_end.php'; ?>
-<script>
-    $("#toggleTheme").on('change', function () {
-        if ($(this).is(':checked')) {
-            $(this).attr('value', 'true');
-            document.cookie = "theme=2; Max-Age=" + 365 * 24 * 60 * 60;
-        } else {
-            $(this).attr('value', 'false');
-            document.cookie = 'theme=; Max-Age=0';
-        }
-        location.reload();
-    });
-
-</script>
 
 </html>
