@@ -63,7 +63,7 @@ function validateMobileNumber($mobile)
   <style>
     body {
       background:
-        <?php if (isset($_COOKIE["theme"]))
+        <?php if (isset($_SESSION["theme"]))
           echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
         else
           echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
@@ -74,7 +74,7 @@ function validateMobileNumber($mobile)
 
     .nav__link--active {
       color:
-        <?php if (isset($_COOKIE["theme"]))
+        <?php if (isset($_SESSION["theme"]))
           echo "#38b6ff";
         else
           echo "rgba(254, 191, 1, 1)";
@@ -174,9 +174,9 @@ function validateMobileNumber($mobile)
     <a href="MyCart" class="nav__link">
       <?php
       $i = 0;
-      if (isset($_SESSION['inbox_id'])) {
+      if (isset($_COOKIE['inbox_id'])) {
         $stmt = $conn->prepare("SELECT * FROM cart WHERE cart_user_id=:user_id");
-        $stmt->execute(['user_id' => $_SESSION['inbox_id']]);
+        $stmt->execute(['user_id' => $_COOKIE['inbox_id']]);
         foreach ($stmt as $row)
           $i++;
       ?>

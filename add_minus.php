@@ -1,7 +1,5 @@
 <?php
 include 'includes/session.php';
-include './includes/req_start.php';
-if ($req_per == 1) {
     if (!isset($_POST['remove'])) {
         if (isset($_POST['id'])) {
             $id = test_input($_POST['id']);
@@ -15,7 +13,6 @@ if ($req_per == 1) {
                 }
                 $stmt = $conn->prepare("UPDATE cart SET cart_qty=:qty WHERE cart_id=:id");
                 $stmt->execute(['qty' => $qty, 'id' => $id]);
-
             }
             $pdo->close();
         } else {
@@ -28,11 +25,9 @@ if ($req_per == 1) {
             $conn = $pdo->open();
             $stmt = $conn->prepare("DELETE FROM cart WHERE cart_id=:id");
             $stmt->execute(['id' => $id]);
-            $_SESSION['error'] = "Item deleted.";
             $pdo->close();
         } else {
             $_SESSION['error'] = 'Wrong Inputs.';
         }
     }
-}
 header('location: MyCart');

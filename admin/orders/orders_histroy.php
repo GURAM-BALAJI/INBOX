@@ -53,7 +53,7 @@
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                    <th>Id</th>
+                      <th>Id</th>
                       <th>Item Id</th>
                       <th>Image</th>
                       <th>Name</th>
@@ -74,7 +74,7 @@
                           if ($row['history_delivered'] == 0)
                             $color = 'red';
                           else
-                          $color='';
+                            $color = '';
                           echo "<tr style='background-color:$color'>";
                           echo "<td>" . $row['history_id'] . "</td>
                           <td>" . $row['items_id'] . "</td>
@@ -101,27 +101,12 @@
                               break;
                           }
                           echo "<td>" . htmlspecialchars($label) . "</td>";
-                          switch ($row['item_meal_type']) {
-                            case 1:
-                              $label2 = 'Breakfast';
-                              break;
-                            case 2:
-                              $label2 = 'Lunch';
-                              break;
-                            case 3:
-                              $label2 = 'Dinner';
-                              break;
-                            case 4:
-                              $label2 = 'Singles';
-                              break;
-                            case 5:
-                              $label2 = 'Snacks';
-                              break;
-                            default:
-                              $label2 = 'Unknown';
-                              break;
-                          }
-                          echo "<td>" . htmlspecialchars($label2) . "</td>";
+                          echo "<td>";
+                          $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
+                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]);
+                          foreach ($stmtcatname as $rowcatname)
+                            echo htmlspecialchars($rowcatname['category_name']);
+                          echo "</td>";
                           echo "<td>" . $row['items_add_date'] . "</td>";
                           echo "</tr>
                         ";

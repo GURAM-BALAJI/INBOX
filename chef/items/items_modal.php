@@ -23,12 +23,14 @@
                         <label for="meal_type" class="col-sm-3 control-label">Meal type</label>
                         <div class="col-sm-9">
                             <select class="form-control" id="meal_type" name="meal_type" required>
-                            <option value="">Select Meal type</option>
-                                <option value="1">Breakfast</option>
-                                <option value="2">Lunch</option>
-                                <option value="3">Dinner</option>
-                                <option value="4">Singles</option>
-                                <option value="5">Snacks</option>
+                                <option value="" required>Select Meal type</option>
+                                <?php
+                                $stmt = $conn->prepare("SELECT category_id, category_name FROM category");
+                                $stmt->execute();
+                                foreach ($stmt as $row) {
+                                    echo "<option value=" . $row['category_id'] . ">" . $row['category_name'] . "</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -41,7 +43,7 @@
                     <div class="form-group">
                         <label for="photo" class="col-sm-3 control-label">Photo</label>
                         <div class="col-sm-9">
-                            <input type="file" id="photo" name="photo" accept="image/*"  class="form-control">
+                            <input type="file" id="photo" name="photo" accept="image/*" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,9 +53,10 @@
                             <input type="number" step="any" class="form-control" id="amount" name="amount" required>
                         </div>
                     </div>
-                  
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                                class="fa fa-close"></i> Close</button>
                         <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i>
                             Add</button>
                     </div>

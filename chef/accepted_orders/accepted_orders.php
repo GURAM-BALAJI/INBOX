@@ -63,7 +63,7 @@
                       $conn = $pdo->open();
                       try {
                         $stmt = $conn->prepare("SELECT * FROM orders left join items on orders_items=items_id WHERE item_chef_id=:orders_chef_id AND orders_accept=:orders_accept");
-                        $stmt->execute(['orders_chef_id' => $_SESSION['vm_id_admin'], 'orders_accept'=>1]);
+                        $stmt->execute(['orders_chef_id' => $_SESSION['vm_id_admin'], 'orders_accept' => 1]);
                         foreach ($stmt as $row) {
                           echo "<tr  style='background-color:lightgreen'>";
                           echo "<td>" . $row['orders_id'] . "</td>";
@@ -80,29 +80,14 @@
                               $label = 'Unknown';
                               break;
                           }
-                          switch ($row['item_meal_type']) {
-                            case 1:
-                              $label2 = 'Breakfast';
-                              break;
-                            case 2:
-                              $label2 = 'Lunch';
-                              break;
-                            case 3:
-                              $label2 = 'Dinner';
-                              break;
-                            case 4:
-                              $label2 = 'Singles';
-                              break;
-                            case 5:
-                              $label2 = 'Snacks';
-                              break;
-                            default:
-                              $label2 = 'Unknown';
-                              break;
-                          }
-                          echo "<td>" . htmlspecialchars($label) . " - " . htmlspecialchars($label2) . "</td>";
+                          echo "<td>";
+                          $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
+                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]);
+                          foreach ($stmtcatname as $rowcatname)
+                            echo htmlspecialchars($label) . " - " . htmlspecialchars($rowcatname['category_name']);
+                          echo "</td>";
                           echo "<td>" . $row['items_add_date'] . "</td>";
-                         
+
                           echo "</tr>";
                         }
                       } catch (PDOException $e) {
@@ -123,8 +108,8 @@
     </div>
 
     <!--accept orders-->
-   
-  <!-- ./wrapper -->
+
+    <!-- ./wrapper -->
   </div>
   <?php include '../includes/scripts.php'; ?>
 </body>

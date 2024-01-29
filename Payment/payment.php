@@ -13,7 +13,7 @@
     <?php
     include '../includes/session.php';
     $conn = $pdo->open();
-    $id = $_SESSION['inbox_id'];
+    $id = $_COOKIE['inbox_id'];
     $total = 0;
     $stmt_check = $conn->prepare("SELECT items_cost,cart_qty FROM cart left join items on items_id=cart_items_id WHERE cart_user_id=:cart_user_id");
     $stmt_check->execute(['cart_user_id' => $id]);

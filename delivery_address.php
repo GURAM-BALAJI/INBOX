@@ -4,7 +4,7 @@ include 'includes/session.php';
 $conn = $pdo->open();
 
 // Assuming you've retrieved user ID as $id
-$id = $_SESSION['inbox_id'];
+$id = $_COOKIE['inbox_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = test_input($_POST["phone"]);
@@ -33,31 +33,7 @@ $pdo->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <style>
-        body {
-            background:
-                <?php if (isset($_COOKIE["theme"]))
-                    echo "linear-gradient( to right, #c6eaff 50%, #38b6ff 50%, #c6eaff 0%, #38b6ff 0%)";
-                else
-                    echo "linear-gradient(to right, rgba(235, 224, 232, 1) 52%, rgba(254, 191, 1, 1) 53%, rgba(254, 191, 1, 1) 100%)";
-                ?>
-            ;
-            font-family: 'Roboto', sans-serif;
-            text-align: center;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .nav__link--active {
-            color:
-                <?php if (isset($_COOKIE["theme"]))
-                    echo "#38b6ff";
-                else
-                    echo "rgba(254, 191, 1, 1)";
-                ?>
-            ;
-        }
+    
 
 
         h1 {
@@ -155,7 +131,7 @@ $pdo->close();
                 <label for="address-line-2">Address</label>
                 <input type="text" placeholder="Enter Area/Street/Land Mark" id="address-line-2" name="address-line-2">
 
-                <button onclick="makePaymentAndRedirect()">Last Step</button>
+                <button type="submit">Last Step</button>
             </form>
         </div>
     </div>

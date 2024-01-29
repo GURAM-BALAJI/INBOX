@@ -12,12 +12,12 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Present Orders
+        Refund_History
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">Manage</li>
-          <li class="active">Present Orders</li>
+          <li class="active">PRefund_History</li>
         </ol>
       </section>
 
@@ -53,49 +53,38 @@
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>OID</th>
-                      <th>Item - cost*(Qty)</th>
-                      <th>Catogory</th>
-                      <th>Added Date</th>
+                      <th>Refund_ID</th>
+                      <th>Order_id</th>
+                      <th>Address_id</th>
+                      <th>Item _name</th>
+                      <th>cost</th>
+                      <th>MObile_number</th>
                       <th>Status</th>
                     </thead>
                     <tbody>
                       <?php
                       $conn = $pdo->open();
-                      try {
-                        $stmt = $conn->prepare("SELECT * FROM orders left join items on orders_items=items_id WHERE item_chef_id=:orders_chef_id AND orders_accept=:orders_accept");
-                        $stmt->execute(['orders_chef_id' => $_SESSION['vm_id_admin'], 'orders_accept'=>0]);
-                        foreach ($stmt as $row) {
+                     try {
+                        $stmt = $conn->prepare("SELECT * FROM refund ");
+                        $stmt->execute();
+                       
+                        foreach ($stmt as $row){
+                            $stmt1=$conn->prepare("SELECT items.items_name from items Join refund ON items.items_id=refund.Item_name_qty where items.items_id= :items_id");
+                            $stmt1->execute(['items_id' => $row['Item_name_qty']]);
+                            $row2 = $stmt1->fetch(PDO::FETCH_ASSOC);
                           echo "<tr>";
-                          echo "<td>" . $row['orders_id'] . "</td>";
-                          echo "<td>" . $row['items_name'] . " - " . $row['items_cost'] . "*(" . $row['orders_qty'] . ")</td>";
-
-                          switch ($row['item_category']) {
-                            case 0:
-                              $label = 'Veg';
-                              break;
-                            case 1:
-                              $label = 'Non-Veg';
-                              break;
-                            default:
-                              $label = 'Unknown';
-                              break;
-                          }
-                          echo "<td>";
-                          $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
-                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]);
-                          foreach ($stmtcatname as $rowcatname)
-                            echo htmlspecialchars($label) . " - " . htmlspecialchars($rowcatname['category_name']);
-                          echo "</td>";
-                          echo "<td>" . $row['items_add_date'] . "</td>";
-                          echo "<td>";
-                          echo "<button class='btn btn-success btn-sm accept btn-flat' data-id='" . $row['orders_id'] . "'></i> Accept Order</button>";
+                          echo "<td>" . $row['id'] . "</td>";
+                          echo "<td>" . $row['Order_id'] . "</td>";
+                          echo "<td>" . $row['address_id'] . "</td>";
+                          echo "<td>" . $row2['items_name'] .  "</td>";
+                          echo "<td>" . $row['cost'] . "</td>";
+                          echo "<td>" . $row['Mobile_number'] . "</td>";  
                           echo "</td>";
                           echo "</tr>";
                         }
                       } catch (PDOException $e) {
                         echo "Something Went Wrong.";
-                      }
+                     }
 
                       $pdo->close();
                       ?>

@@ -74,19 +74,13 @@
 
                       try {
                         $stmt = $conn->prepare("SELECT * FROM items WHERE item_chef_id=:item_chef_id");
-                        $stmt->execute(['item_chef_id'=> $_SESSION['vm_id_admin']]);
+                        $stmt->execute(['item_chef_id' => $_SESSION['vm_id_admin']]);
                         $categoryNames = [
                           0 => 'Veg',
                           1 => 'Non-veg',
                         ];
 
-                        $mealTypeNames = [
-                          1 => 'Breakfast',
-                          2 => 'Lunch',
-                          3 => 'Dinner',
-                          4 => 'Singles',
-                          5 => 'Snacks',
-                        ];
+
 
                         foreach ($stmt as $row) {
                           $status = ($row['item_status']) ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Not Active</span>';
@@ -105,7 +99,13 @@
                           echo "</td>";
 
                           echo "<td>" . $categoryNames[$row['item_category']] . "</td>";
-                          echo "<td>" . $mealTypeNames[$row['item_meal_type']] . "</td>";
+
+                          echo "<td>";
+                          $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
+                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]); 
+                          foreach ($stmtcatname as $rowcatname)
+                            echo htmlspecialchars($rowcatname['category_name']);
+                          echo "</td>";
 
                           echo "<td>" . $row['items_cost'] . "</td>
                             <td>
