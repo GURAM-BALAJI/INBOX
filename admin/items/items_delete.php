@@ -7,8 +7,8 @@ if (isset($_POST['delete'])) {
 	if ($id > 0) {
 		$conn = $pdo->open();
 		try {
-			$stmt = $conn->prepare("DELETE FROM items WHERE items_id=:id");
-			$stmt->execute(['id' => $id]);
+			$stmt = $conn->prepare("UPDATE items set items_delete=:delete WHERE items_id=:id");
+			$stmt->execute(['delete' => 1, 'id' => $id]);
 			$_SESSION['success'] = 'Display items deleted successfully';
 		} catch (PDOException $e) {
 			$_SESSION['error'] = "Something Went Wrong.";

@@ -22,7 +22,12 @@
                             <input type="text" class="form-control" name="category_name" required>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="commission" class="col-sm-3 control-label">Commission</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" name="commission" required>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -55,6 +60,13 @@
                             <input type="text" class="form-control" id="category_name" name="category_name" required>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="commission" class="col-sm-3 control-label">Commission</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" id="commission" name="commission" required>
+                        </div>
+                    </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i

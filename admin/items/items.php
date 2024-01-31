@@ -49,10 +49,10 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
-                <div class="box-header with-border">
-                  <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i
-                      class="fa fa-plus"></i> New Items</a>
-                </div>
+                <!-- <div class="box-header with-border"> -->
+                  <!-- <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i -->
+                      <!-- class="fa fa-plus"></i> New Items</a> -->
+                <!-- </div> -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
@@ -63,6 +63,7 @@
                       <th>Category</th>
                       <th>Meal type</th>
                       <th>Price</th>
+                      <th>Com_Price</th>
                       <th>status</th>
                       <th>Added Date</th>
                       <th>Tools</th>
@@ -71,9 +72,8 @@
                     <tbody>
                       <?php
                       $conn = $pdo->open();
-
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM items");
+                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=0");
                         $stmt->execute();
                         $categoryNames = [
                           0 => 'Veg',
@@ -99,13 +99,14 @@
 
                           echo "<td>";
                           $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
-                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]); 
-                          foreach ($stmtcatname as $rowcatname)
+                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]); foreach ($stmtcatname as $rowcatname)
                             echo htmlspecialchars($rowcatname['category_name']);
                           echo "</td>";
 
-                          echo "<td>" . $row['items_cost'] . "</td>
-                            <td>
+                          echo "<td>" . $row['items_cost'] . "
+                         </td>
+                            <td>" . $row['item_commission_cost'] . "  <span class='pull-right'>
+                            <a href='#offer' class='offeridadd' data-toggle='modal' data-id=" . $row['items_id'] . "><i class='fa fa-check-square-o'></i></a></span></td><td>
                             $status";
                           echo "$active";
                           echo "</td>";
@@ -158,6 +159,14 @@
       getRow(id);
     });
 
+    $(document).on('click', '.offeridadd', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var offer = $(this).data('offer');
+      $('.itemofferid').val(id);
+      getRow(id);
+    });
+
     function getRow(id) {
       $.ajax({
         type: 'POST',
@@ -168,6 +177,7 @@
         dataType: 'json',
         success: function (response) {
           $('.catid').val(response.items_id);
+          $('.offer').val(response.item_commission_cost);
           $('.itemname').html(response.items_name);
           $('.itemstatus1').val(response.items_id);
           $('.itemstatus2').val(response.items_id);

@@ -15,10 +15,14 @@
     $conn = $pdo->open();
     $id = $_COOKIE['inbox_id'];
     $total = 0;
-    $stmt_check = $conn->prepare("SELECT items_cost,cart_qty FROM cart left join items on items_id=cart_items_id WHERE cart_user_id=:cart_user_id");
+    $stmt_check = $conn->prepare("SELECT item_commission_cost,cart_qty FROM cart left join items on items_id=cart_items_id WHERE cart_user_id=:cart_user_id");
     $stmt_check->execute(['cart_user_id' => $id]);
     foreach ($stmt_check as $row_check)
-        $total += $row_check['cart_qty'] * $row_check['items_cost'];
+        $total += $row_check['cart_qty'] * $row_check['item_commission_cost'];
+    $total += $total * 5 / 100;
+    $stmt1 = $conn->prepare("SELECT `message` FROM `message` WHERE `message_id`=:id");
+    $stmt1->execute(['id' => 3]); foreach ($stmt1 as $row1)
+        $total += $row1['message'];
     $pdo->close();
     ?>
 

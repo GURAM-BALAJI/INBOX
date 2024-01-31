@@ -76,7 +76,7 @@
                           <img src='" . $image . "' height='30px' width='30px'>";
                           echo "</td>
                             <td>" . $row['items_name'] . "</td>
-                            <td>" . $row['items_cost'] . "</td>";
+                            <td>" . $row['items_cost'] . "(" . $row['item_commission_cost'] . ")</td>";
                           echo "<td>";
                           $stmt1 = $conn->prepare("SELECT admin_name FROM admin WHERE admin_id =:given_id");
                           $stmt1->execute(['given_id' => $row['item_chef_id']]);

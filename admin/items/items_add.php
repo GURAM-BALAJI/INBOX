@@ -5,8 +5,12 @@ if (isset($_POST['add'])) {
 	$Category = test_input($_POST['Category']);
 	$meal_type = test_input($_POST['meal_type']);
 	$item_name = test_input($_POST['item_name']);
-	$given_id =  $_SESSION['vm_id_admin'];
-	$item_price = test_input($_POST['amount']);
+	$given_id = $_SESSION['vm_id_admin'];
+	$item_commission_cost = $item_price = test_input($_POST['amount']);
+	$stmt = $conn->prepare("SELECT category_commission FROM category WHERE category_id=:category_id");
+	$stmt->execute(['category_id' => $meal_type]);
+	foreach ($stmt as $row)
+		$item_commission_cost = $_POST['amount']+(($row['category_commission']/100)*$_POST['amount']);
 	$filename = isset($_FILES['photo']['name']) ? $_FILES['photo']['name'] : null;
 
 	// File Upload Handling
@@ -28,8 +32,8 @@ if (isset($_POST['add'])) {
 	$conn = $pdo->open();
 
 	try {
-		$stmt = $conn->prepare("INSERT INTO items (item_category, item_meal_type, items_name, items_cost, items_add_date, items_image, item_status,item_chef_id) VALUES (:item_category, :item_meal_type, :items_name, :items_cost, :items_add_date, :items_image, :item_status,:item_chef_id)");
-			
+		$stmt = $conn->prepare("INSERT INTO items (item_category, item_meal_type, items_name, items_cost, items_add_date, items_image, item_status,item_chef_id,item_commission_cost) VALUES (:item_category, :item_meal_type, :items_name, :items_cost, :items_add_date, :items_image, :item_status,:item_chef_id,:item_commission_cost)");
+
 		$stmt->bindParam(':item_category', $Category, PDO::PARAM_STR);
 		$stmt->bindParam(':item_meal_type', $meal_type, PDO::PARAM_STR);
 		$stmt->bindParam(':items_name', $item_name, PDO::PARAM_STR);
@@ -39,6 +43,7 @@ if (isset($_POST['add'])) {
 		$status = 1; // Assign a value to a variable and then bind
 		$stmt->bindParam(':item_status', $status, PDO::PARAM_INT);
 		$stmt->bindParam(':item_chef_id', $given_id, PDO::PARAM_INT);
+		$stmt->bindParam(':item_commission_cost', $item_commission_cost, PDO::PARAM_INT);
 		// Execute the statement
 		$stmt->execute();
 

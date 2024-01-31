@@ -46,10 +46,9 @@
       <li><a href="../orders/orders.php"><i class="fa fa-shopping-cart"></i> <span>Present Orders</span></a></li>
       <li><a href="../active_items/active_items.php"><i class="fa fa-tasks"></i> <span>Active Items</span></a></li>
       <li><a href="../items/items.php"><i class="fa fa-cutlery"></i> <span>Items</span></a></li>
-      <li><a href="../refund/refund.php"><i class="fa fa-refresh"></i> <span>Refund</span></a></li>
+      <!-- <li><a href="../refund/refund.php"><i class="fa fa-refresh"></i> <span>Refund</span></a></li> -->
       <li><a href="../admin/admin.php"><i class="fa fa-grav"></i> <span>Admin</span></a></li>
       <li><a href="../category/category.php"><i class="fa fa-arrows-alt"></i> <span>category</span></a></li>
-      <li><a href="../admin/admin.php"><i class="fa fa-grav"></i> <span>Admin</span></a></li>
       <li><a href="../message/message.php"><i class="fa fa-comment"></i> <span>Message</span></a></li>
 
     </ul>

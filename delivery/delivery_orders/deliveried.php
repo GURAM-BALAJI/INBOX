@@ -8,6 +8,8 @@ if (isset($_POST['yes'])) {
 		try {
 			$stmt = $conn->prepare("UPDATE orders SET orders_delivered=:status WHERE orders_id=:id");
 			$stmt->execute(['status' => 1, 'id' => $id]);
+			$stmt = $conn->prepare("DELETE FROM orders WHERE orders_id=:id");
+			$stmt->execute(['id' => $id]);
 			$_SESSION['success'] = 'Order Deliveried Successfully';
 		} catch (PDOException $e) {
 			$_SESSION['error'] = "Something Went Wrong.";
@@ -25,6 +27,8 @@ if (isset($_POST['no'])) {
 		try {
 			$stmt = $conn->prepare("UPDATE orders SET orders_delivered=:status WHERE orders_id=:id");
 			$stmt->execute(['status' => 2, 'id' => $id]);
+			$stmt = $conn->prepare("DELETE FROM orders WHERE orders_id=:id");
+			$stmt->execute(['id' => $id]);
 			$_SESSION['error'] = 'Order Did Not Deliveried.';
 		} catch (PDOException $e) {
 			$_SESSION['error'] = "Something Went Wrong.";

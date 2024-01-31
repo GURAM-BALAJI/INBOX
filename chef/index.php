@@ -2,7 +2,7 @@
 <?php
 include '../includes/session.php';
 if (isset($_SESSION['vm_admin']))
-  header('location: orders/orders.php');
+  header('location: accepted_orders/accepted_orders.php');
 ?>
 
 <html lang="en">

@@ -73,7 +73,7 @@
                       $conn = $pdo->open();
 
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM items WHERE item_chef_id=:item_chef_id");
+                        $stmt = $conn->prepare("SELECT * FROM items WHERE item_chef_id=:item_chef_id AND items_delete=0");
                         $stmt->execute(['item_chef_id' => $_SESSION['vm_id_admin']]);
                         $categoryNames = [
                           0 => 'Veg',
@@ -107,7 +107,7 @@
                             echo htmlspecialchars($rowcatname['category_name']);
                           echo "</td>";
 
-                          echo "<td>" . $row['items_cost'] . "</td>
+                          echo "<td>" . $row['items_cost'] ."</td>
                             <td>
                             $status";
                           echo "$active";

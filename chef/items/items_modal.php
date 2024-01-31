@@ -25,7 +25,7 @@
                             <select class="form-control" id="meal_type" name="meal_type" required>
                                 <option value="" required>Select Meal type</option>
                                 <?php
-                                $stmt = $conn->prepare("SELECT category_id, category_name FROM category");
+                                $stmt = $conn->prepare("SELECT category_id, category_name FROM category WHERE category_delete=0");
                                 $stmt->execute();
                                 foreach ($stmt as $row) {
                                     echo "<option value=" . $row['category_id'] . ">" . $row['category_name'] . "</option>";

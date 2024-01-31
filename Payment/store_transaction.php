@@ -30,7 +30,7 @@ foreach ($stmt_check11 as $row) {
 }
 if ($action === 'store') {
     // Insert into orders table
-    $stmt_orders = $conn->prepare("INSERT INTO orders (orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_address_id) VALUES (:orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_address_id)");
+    $stmt_orders = $conn->prepare("INSERT INTO orders (orders_accept, orders_qty,orders_cost,orders_items,orders_user_id,orders_date, orders_address_id) VALUES (:orders_accept, :orders_qty,:orders_cost,:orders_items,:orders_user_id,:orders_date, :orders_address_id)");
  
     // Delete cart entries
     $stmt_delete_cart = $conn->prepare("DELETE FROM cart WHERE cart_user_id=:id");
@@ -43,7 +43,7 @@ if ($action === 'store') {
         $stmt_check->execute(['cart_user_id' => $id]);
 
         foreach ($stmt_check as $row_check) {
-            $stmt_orders->execute(['orders_qty' => $row_check['cart_qty'], 'orders_cost' => $row_check['items_cost'], 'orders_items' => $row_check['cart_items_id'], 'orders_user_id' => $id, 'orders_date' => $today, 'orders_address_id' => $address_id]);
+            $stmt_orders->execute(['orders_accept' => 1,'orders_qty' => $row_check['cart_qty'], 'orders_cost' => $row_check['item_commission_cost'], 'orders_items' => $row_check['cart_items_id'], 'orders_user_id' => $id, 'orders_date' => $today, 'orders_address_id' => $address_id]);
         }
 
         $stmt_delete_cart->execute(['id' => $id]);

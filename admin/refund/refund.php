@@ -65,7 +65,7 @@
                       <?php
                       $conn = $pdo->open();
                      try {
-                        $stmt = $conn->prepare("SELECT * FROM refund ");
+                        $stmt = $conn->prepare("SELECT * FROM refund");
                         $stmt->execute();
                        
                         foreach ($stmt as $row){

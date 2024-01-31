@@ -29,11 +29,9 @@ include 'includes/header.php';
         outline: none;
         list-style: none;
         text-decoration: none;
-        font-family: ‘Josefin Sans’, sans-serif;
     }
 
     table {
-        font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
     }
@@ -87,6 +85,86 @@ include 'includes/header.php';
 
     .history {
         display: none;
+    }
+
+    .form-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        z-index: 999;
+
+    }
+
+    .form-container {
+        margin-top: 25%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 350px;
+        border-radius: 10px;
+        padding: 30px 35px 40px;
+        background-color: #dcdff1;
+        box-sizing: border-box;
+        position: relative;
+        font-family: Verdana;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .form-container input[type=text],
+    .form-container input[type=password] {
+        width: 100%;
+        display: block;
+        height: 43px;
+        padding: 15px;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        /* Adjust as needed */
+        border: none;
+        border-radius: 3px;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 10px;
+        padding-left: 15px;
+        background-color: rgba(255, 255, 255, 0.07);
+        box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
+    }
+
+    ::placeholder {
+        color: #555;
+    }
+
+    .form-container .btn {
+        padding: 12px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+        font-size: 25px;
+        box-shadow: -4px -4px 7px #fffdfdb7, 3px 3px 5px rgba(94, 104, 121, 0.388);
+        margin-top: 15px;
+        margin-bottom: 10px;
+        background: #dcdff1;
+        opacity: 0.8;
+        font-weight: 700;
+    }
+
+    .text {
+        font-size: 16px;
+        color: #000000;
+        font-weight: 800px;
+        text-align: center;
+        margin-bottom: 30px;
     }
 </style>
 
@@ -170,28 +248,28 @@ include 'includes/header.php';
                                                     <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
                                                     <?php if ($row11['cart_qty'] == '1') { ?>
                                                         <button style="color:#767678;border: none; background-color:#dcdff1;"
-                                                            type="submit" name="remove"><i class="fa fa-trash fa-lg"
-                                                                aria-hidden="true"></i></button>
+                                                            type="submit" name="remove"><i style="font-size:30px"
+                                                                class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
                                                     <?php } else { ?>
                                                         <button style="color:#767678;border: none; background-color:#dcdff1;"
-                                                            type="submit" name="minus"><i class="fa fa-minus-circle fa-lg"
-                                                                aria-hidden="true"></i></button>
+                                                            type="submit" name="minus"><i style="font-size:30px"
+                                                                class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></button>
                                                     <?php } ?>
                                                     <input type="hidden" name="qty" value="<?php echo $row11['cart_qty']; ?>">
-                                                    <b style="font-size:1.5rem;">
+                                                    <b style="font-size:1.5rem;font-size:20px;margin:0px 10px 0px 10px">
                                                         <?php echo $row11['cart_qty']; ?>
                                                     </b>
                                                     <button style="color:#767678;border: none; background-color:#dcdff1;"
-                                                        type="submit" name="add"><i class="fa fa-plus-circle fa-lg"
-                                                            aria-hidden="true"></i></button>
+                                                        type="submit" name="add"><i style="font-size:30px"
+                                                            class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></button>
                                                 </center>
                                             </form>
                                         </td>
                                     <tr>
                                         <td style="padding-left: 10px;color:#767678;">
                                             <?php
-                                            $total += $row11['cart_qty'] * $row1['items_cost'];
-                                            echo '<b>&#8377;' . $row11['cart_qty'] * $row1['items_cost'] . '</b>'; ?>
+                                            $total += $row11['cart_qty'] * $row1['item_commission_cost'];
+                                            echo '<b>&#8377;' . $row11['cart_qty'] * $row1['item_commission_cost'] . '</b>'; ?>
                                         </td>
                                     </tr>
 
@@ -220,14 +298,39 @@ include 'includes/header.php';
                             </tr>
                             <tr>
                                 <th width="80%" style="padding-left:15px;color:#767678;padding-top:10px;">
-                                    Delivery
+                                    Tax and Charges
                                 </th>
                                 <th>
                                     <b style="color:#767678;padding-top:10px;">
-                                        <?php echo 'Free'; ?>
+                                        <?php
+                                        $tax = $total * 5 / 100;
+                                        echo '+' . $tax;
+                                        $total += $tax;
+                                        ?>
                                     </b>
                                 </th>
                             </tr>
+                            <tr>
+                                <th width="80%" style="padding-left:15px;color:#767678;padding-top:10px;">
+                                    Delivery Charges
+                                </th>
+                                <th>
+                                    <b style="color:#767678;padding-top:10px;">
+                                        <?php
+                                        $stmt1 = $conn->prepare("SELECT `message` FROM `message` WHERE `message_id`=:id");
+                                        $stmt1->execute(['id' => 3]);
+                                        foreach ($stmt1 as $row1)
+                                            $delivery = $row1['message'];
+                                        if ($delivery == 0)
+                                            echo "Free";
+                                        else {
+                                            echo '+' . $delivery;
+                                            $total += $delivery;
+                                        } ?>
+                                    </b>
+                                </th>
+                            </tr>
+
                             <tr>
                                 <th width="80%" style="padding-bottom:20px;padding-top:20px;padding-left:15px">
                                     Total Cost
@@ -240,11 +343,9 @@ include 'includes/header.php';
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="Address">
-                                        <button class="button">
-                                            Checkout
-                                        </button>
-                                    </a>
+                                    <button class="button" onclick="openForm()">
+                                        Checkout
+                                    </button>
                                 </td>
                             </tr>
 
@@ -282,7 +383,6 @@ include 'includes/header.php';
                 SELECT *
                 FROM address_details
                 WHERE user_id = :user1
-                LIMIT 7
             ) ad
         JOIN
             orders o ON ad.address_id = o.orders_address_id AND ad.user_id = o.orders_user_id
@@ -307,7 +407,6 @@ include 'includes/header.php';
                 SELECT *
                 FROM address_details
                 WHERE user_id = :user2
-                LIMIT 7
             ) ad
         JOIN
             history h ON ad.address_id = h.history_address_id AND ad.user_id = h.history_user_id
@@ -338,9 +437,9 @@ include 'includes/header.php';
                 <?php }
                     $total = 0; ?>
                 <section class="content" style=" min-height: 10px; padding: 10px 15px 3px 15px; ">
-                        <div class="modal-content"
-                            style="border-radius:15px; background-color: #dcdff1;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); ">
-                            <div class="modal-body" style="padding:10px 15px 10px 15px;">
+                    <div class="modal-content"
+                        style="border-radius:15px; background-color: #dcdff1;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); ">
+                        <div class="modal-body" style="padding:10px 15px 10px 15px;">
                             <table>
                                 <tr>
                                     <td width="50%" style=" font-weight:bold; font-size:20px;font: bold 20px/1 sans-serif;">Order
@@ -390,16 +489,43 @@ include 'includes/header.php';
                     </div>
                 </div>
             </section>
-        <?php }else{?>
+        <?php } else { ?>
             <a href="MyHome">
-                    <div class="button" style="padding:10px;">My stomach is empty. <br><i class="fa fa-frown-o"
-                            aria-hidden="true"></i></div>
-                </a>
-        <?php }}
+                <div class="button" style="padding:10px;">My stomach is empty. <br><i class="fa fa-frown-o"
+                        aria-hidden="true"></i></div>
+            </a>
+        <?php }
+        }
         $pdo->close();
         ?>
     </div>
+    <div class="form-popup" id="myForm">
+        <form action="Address" method="POST" class="form-container">
 
+
+            <div class="text">
+                <h1><b>Delivery Address</b></h1>
+            </div>
+
+            <label for="Name">Name</label>
+            <input type="text" placeholder="Enter Your name." id="username" name="username" required>
+
+            <label for="phone">Phone</label>
+            <input type="text" placeholder="Enter Your Phone Number" id="phone" name="phone" required>
+
+            <label for="address-line-1">Land Mark</label>
+            <input type="text" placeholder="Enter Flat No/Appartment Name/House No" id="address-line-1"
+                name="address-line-1" required>
+
+            <label for="address-line-2">Address</label>
+            <input type="text" placeholder="Enter Area/Street/Land Mark" id="address-line-2" name="address-line-2"
+                required>
+
+            <button type="submit" style=" background: #c3c4c9;" class="btn">Save</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
+        </form>
+    </div>
 </body>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -419,6 +545,15 @@ include 'includes/header.php';
         $(".orders").show();
         $(".history").hide();
     })
+
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+
 </script>
 
 </html>

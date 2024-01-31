@@ -7,12 +7,17 @@ include 'includes/header.php';
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>Inbox</title>
 </head>
 <style>
     body {
 
         font-family: 'Roboto', sans-serif;
+        background-color: #dcdff1;
     }
 
     hr {
@@ -29,7 +34,6 @@ include 'includes/header.php';
 
     .outer-container {
         max-width: 1000px;
-        margin-top: -30px;
         box-sizing: border-box;
     }
 
@@ -37,12 +41,13 @@ include 'includes/header.php';
         display: flex;
         flex-wrap: wrap;
         margin: -1%;
-        /* Adjusted margin to account for padding */
+
     }
 
     .kitchen {
         flex: 0 0 calc(25% - 2%);
-        background-color: #fff;
+        background-color: #dcdff1;
+        box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);
         /* Four kitchens per row */
         box-sizing: border-box;
         padding: 10px;
@@ -50,7 +55,6 @@ include 'includes/header.php';
         /* Adjusted padding to account for margin */
         border: 2px solid #ccc;
         /* Border for each kitchen */
-        margin: 1%;
         /* Added margin for space between kitchens */
         border-radius: 8px;
         position: relative;
@@ -81,9 +85,9 @@ include 'includes/header.php';
         }
 
         .kitchen {
-            flex: 0 0 48%;
+            flex: 0 0 45%;
             /* One kitchen per row on smaller screens */
-            margin: 1%;
+            margin: 2%;
         }
 
         /* Adjust styles for images in smaller screens if needed */
@@ -144,43 +148,262 @@ include 'includes/header.php';
         font-size: 60px;
     }
 
+
+
+    @keyframes letterDrop {
+        to {
+            color: black;
+            /* Change text color to white at the end of the animation */
+            transform: translateY(0);
+        }
+    }
+
+    .kitchen-label {
+        border: 0.5px solid #c4c3c3;
+        margin: 10px 0 5px 10px;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #dcdff1;
+        box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);
+        text-transform: capitalize;
+        font-weight: 700;
+        text-align: left;
+        animation: kitchen-label 3s linear forwards;
+    }
+
+    @keyframes kitchen-label {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        30% {
+            transform: translateX(0);
+        }
+    }
+
+
+    .movie-container {
+        margin-left: 10px;
+        flex: 0 0 auto;
+        width: 150px;
+        background-color: white;
+        padding: 7px;
+        margin-right: 5px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-weight: normal;
+    }
+
+    .movie {
+        margin-left: 10px;
+        flex: 0 0 auto;
+        width: 150px;
+        background-color: rgb(242, 241, 241);
+        padding: 7px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        /* Change flex-direction to column */
+        align-items: center;
+        font-weight: normal;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 0.5px solid #ffffff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 200px;
+        /* Fixed height */
+    }
+
+    .movie img {
+        padding: 5px;
+        width: 90%;
+        height: 60%;
+        border-radius: 8px;
+    }
+
+    .movie .price {
+
+        display: flex;
+        align-items: center;
+        /* Align items vertically centered */
+
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+
+    .movie .price h2 {
+        text-align: left;
+        font-size: 20px;
+        margin-top: 5px;
+        margin-bottom: 2px;
+        margin-right: 3px;
+        font-weight: bold;
+        flex-shrink: 0;
+        /* Prevent the price from shrinking */
+    }
+
+    .movie button:hover {
+        background-color: #000;
+    }
+
+    .movie .description-container {
+        margin-top: 0px;
+        margin-bottom: 2px;
+        font-size: 12px;
+        width: 90%;
+        text-align: center;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        word-wrap: break-word;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        flex-grow: 1;
+        font-family: 'Lato', sans-serif;
+        font-weight: bold;
+
+    }
+
+    .movie-block-container {
+        display: flex;
+        overflow-x: auto;
+        box-sizing: border-box;
+        animation: scaleIn 1s ease;
+
+    }
+
+    @keyframes scaleIn {
+        from {
+            transform: scale(0);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+
+
+
+    .offer-tag {
+        position: absolute;
+        margin-top: 15px;
+        left: 14px;
+        background-color: orange;
+        color: white;
+        padding: 3px;
+        font-size: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        animation: scrollLeft 7s linear forwards;
+        /* Adjust the duration and timing function as needed */
+    }
+
+    @keyframes scrollLeft {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        30% {
+            transform: translateX(0);
+        }
+    }
+
+    .offer-tag1 {
+        position: absolute;
+        margin-top: 15px;
+        left: 14px;
+        background-color: orangered;
+        color: white;
+        padding: 3px;
+        font-size: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+
+    .star-ratings {
+        width: 40%;
+        margin-top: -11px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        /* Align the star ratings to the bottom */
+        box-sizing: border-box;
+        background-color: #feb64d
+            /* Background color with some transparency */
+    }
+
+
+    .star {
+        align-items: center;
+        font-size: 10px;
+        color: white;
+        margin-top: -2px;
+        /* Add some spacing between stars */
+    }
+
+    .star-ratings-kitchen {
+        margin-left: 90px;
+        width: 20%;
+        border-radius: 15px;
+        display: flex;
+        align-items: flex-end;
+        box-sizing: border-box;
+        justify-content: center;
+        float: right;
+        background-color: #feb64d;
+    }
+
+    .star-kitchen {
+
+        align-items: center;
+        font-size: 12px;
+        color: white;
+    }
+
+    .buttons {
+        display: inline-block;
+    }
+
+    .fa-cart-shopping {
+        font-size: 25px;
+        color: orange;
+        margin-top: 0px;
+        margin-left: 25px;
+        animation: zoomInOut 5s infinite;
+    }
+
+    @keyframes zoomInOut {
+        0% {
+            transform: scale(0.7);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(0.7);
+        }
+    }
 </style>
 
 <body>
     <!-- partial:index.partial.html -->
 
     <center>
-        <div style="background-color: #333;">
-            <img src="logo.png" width="100%" height="70px">
-        </div>
-
-
-        <div style="background-color: #001a35;color: #89E6C4;">
-            <?php if (isset($_GET['meal_type'])) {
-                switch ($_GET['meal_type']) {
-                    case 1:
-                        echo 'BREAKFAST MENU';
-                        break;
-                    case 2:
-                        echo 'LUNCH MENU';
-                        break;
-                    case 3:
-                        echo 'DINNER MENU';
-                        break;
-                    case 4:
-                        echo 'SINGLES MENU';
-                        break;
-                    case 5:
-                        echo 'SNACKS MENU';
-                        break;
-                    default:
-                        echo 'UNKNOWN MENU';
-                        break;
-                }
-                ;
-
-            } else
-                echo "MENU"; ?>
+        <div>
+            <img src="logo.png" width="100%" height="70px"
+                style="box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
         </div>
         <?php
         $conn = $pdo->open();
@@ -188,16 +411,17 @@ include 'includes/header.php';
         $stmt->execute();
         foreach ($stmt as $row) {
             if ($row['message_id'] == 1 && !empty($row['message'])) { ?>
-                <marquee style="color:yellow;">
+                <marquee style="color:black;">
                     <?php echo $row['message']; ?>
                 </marquee>
             <?php }
             if ($row['message_id'] == 2 && !empty($row['message'])) { ?>
-                <marquee style="color:yellow;">
+                <marquee style="color:black;">
                     <?php echo $row['message']; ?>
                 </marquee>
             <?php }
         } ?>
+
         <?php
         if (isset($_SESSION['error'])) {
             echo "
@@ -249,60 +473,97 @@ include 'includes/header.php';
                 </div>
             </div>
         <?php } else { ?>
-            <div class="modal-content" style="background-color:rgba(255, 255, 255)">
-                <div class="modal-body">
-                    <?php
-                    $item_meal_type = $_GET['meal_type'];
-                    $stmt1 = $conn->prepare("SELECT item_chef_id, admin_name, items_id, items_name, item_status, items_image, items_cost
-                    FROM items left join admin on item_chef_id=admin_id
-                    WHERE item_status = :item_status AND item_meal_type=:item_meal_type
-                    ORDER BY item_chef_id, items_id
-                    ");
-                    $stmt1->execute(['item_status' => 1, 'item_meal_type' => $item_meal_type]);
-                    $CID = 0;
-                    foreach ($stmt1 as $row1) {
-                        if ($CID != $row1['item_chef_id']) { ?>
-                            </table>
-                            <table style="width: 100%;">
-                                <h3
-                                    style="background-color:gold; padding:2px 5px 2px 5px; border-radius: 8px; text-align: center;  ">
-                                    <?php echo $row1['admin_name']; ?>
-                                </h3>
-                            <?php }
+            <div class="main">
+
+
+                <?php
+                if (isset($_GET['meal_type'])) {
+                    $meal_type = $_GET['meal_type'];
+                    $conn = $pdo->open();
+
+                    $stmt = $conn->prepare("SELECT admin_id,items_image, admin_name, items_name,item_meal_type,item_commission_cost,items_id FROM admin  LEFT JOIN items ON admin_id = item_chef_id
+        WHERE admin_type = 2 AND item_meal_type = :meal_type AND item_status = 1");
+                    $stmt->execute([':meal_type' => $meal_type]);
+                    $allRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    $displayedAdmins = [];
+                    $noItemsExist = true; // Assume there are no items for any admin
+            
+                    foreach ($allRows as $row) {
+                        $admin_id = $row['admin_id'];
+                        $admin_name = $row['admin_name'];
+
+                        if (!in_array($admin_id, $displayedAdmins)) {
+                            ?>
+
+                            <div class="kitchen-label">
+                                <?php echo $admin_name; ?>
+                                <div class="star-ratings-kitchen"><span class="star-kitchen">☆</span><span
+                                        class="star-kitchen">☆</span><span class="star-kitchen">☆</span><span
+                                        class="star-kitchen">☆</span><span class="star-kitchen">☆</span>
+                                </div>
+                            </div>
+                            <div class="movie-block-container">
+
+                                <?php
+                                foreach ($allRows as $itemRow) {
+                                    if ($admin_id == $itemRow['admin_id']) {
+                                        $noItemsExist = false; // There are items for at least one admin
+                                        ?>
+                                        <div class="movie"
+                                            style="background-color: #dcdff1;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
+                                            <!-- <div class="offer-tag">5% OFF</div> -->
+                                            <img src="<?php echo './items_images/' . $itemRow['items_image']; ?>" alt="Dosa">
+                                            <div class="star-ratings">
+                                                <span class="star">☆</span>
+                                                <span class="star">☆</span>
+                                                <span class="star">☆</span>
+                                                <span class="star">☆</span>
+                                                <span class="star">☆</span>
+                                            </div>
+                                            <div class="description-container ">
+                                                <?php echo $itemRow['items_name']; ?>
+                                            </div>
+                                            <div class="price">
+                                                <h2>&#8377;&nbsp;
+                                                    <?php echo $itemRow['item_commission_cost']; ?>/-
+                                                </h2>
+                                                <a
+                                                    href="AddCart?id=<?php echo $itemRow['items_id']; ?>&return_id=<?php echo $itemRow['item_meal_type']; ?>">
+                                                    <div> <i class="fas fa-cart-shopping"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    }
+                                }
+
+                                ?>
+
+                            <?php
+                        }
                         ?>
+                    </div>
+                    </div>
+                    <?php
+                    $displayedAdmins[] = $admin_id;
+                    }
+                }
 
-                            <form method="POST" action="AddCart">
-                                <tr>
-                                    <td rowspan="2" style="width:35%">
-                                        <img style="border-radius:1.5rem"
-                                            src="./items_images/<?php echo $row1['items_image']; ?>" height="100rem"
-                                            width="100rem">
-                                    </td>
-                                    <td colspan="2">
-                                        <?php echo "<span style='text-transform: capitalize;font-weight:bold; color:black'>" . $row1['items_name'] . "</span>"; ?>
-                                    </td>
-                                <tr>
-                                    <td>
-                                        <?php echo "<b style='font-size:2rem;'> &#8377;" . $row1['items_cost'] . "</b>"; ?>
-                                    </td>
-                                    <td style="width:30%">
-                                        <input type="hidden" name="id" value="<?php echo $row1['items_id']; ?>">
-                                        <input type="hidden" name="return_id" value="<?php echo $item_meal_type; ?>">
-                                        <button name='add_cart' class='btn btn-warning btn' style="font-size:0.9rem"><i
-                                                class='fa fa-cart-plust'></i>Add To Cart</button>
-                                    </td>
-                                </tr>
-
-                            </form>
-
-                            <?php if ($CID != $row1['item_chef_id']) {
-                                $CID = $row1['item_chef_id'];
-                            }
-
-                    } ?>
-                    </table>
+                if ($noItemsExist) {
+                    // Display a message if there are no items for any admin
+                    ?>
+                <div class="no-items-message"
+                    style="text-align: center; justify-content:center;margin-top:90%; font-size:20px; color:#f17E21;">
+                    Sorry, we don't have any Kitchen available today. 😔
                 </div>
-            </div>
+                <?php
+                }
+
+                $pdo->close();
+
+                ?>
         <?php } ?>
     </section>
     <?php
@@ -322,12 +583,36 @@ include 'includes/header.php';
                 </p>
                 <?php
             } ?>
-            <a class="cartimag" href="MyCart">🍽️</a>
-          
+            <a class="cartimag" href="MyCart">🛒</a>
+
         </div>
         <?php
     } ?>
 </body>
 <?php include 'includes/scripts.php'; ?>
+<script>
+    var movieStars = document.querySelectorAll('.star');
+    var movieRated = false;
+
+    movieStars.forEach(function (star, index) {
+        star.addEventListener('click', function () {
+            if (!movieRated) {
+                for (var i = 0; i < movieStars.length; i++) {
+                    if (i <= index) {
+                        movieStars[i].textContent = '★';
+                    } else {
+                        movieStars[i].textContent = '☆';
+                    }
+                }
+                movieRated = true;
+            } else {
+                for (var i = 0; i < movieStars.length; i++) {
+                    movieStars[i].textContent = '☆';
+                }
+                movieRated = false;
+            }
+        });
+    });
+</script>
 
 </html>

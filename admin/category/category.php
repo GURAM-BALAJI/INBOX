@@ -59,14 +59,14 @@
                       <th>ID</th>
                       <th>Image</th>
                       <th>Name</th>
+                      <th>Commission</th>
                       <th>Tools</th>
                     </thead>
                     <tbody>
                       <?php
                       $conn = $pdo->open();
-
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM category");
+                        $stmt = $conn->prepare("SELECT * FROM category WHERE category_delete=0");
                         $stmt->execute();
                         $slno = 1;
                         foreach ($stmt as $row) {
@@ -75,7 +75,7 @@
                           <td><img src='" . $image . "' height='30px' width='30px'>";
                           echo "<span class='pull-right'><a href='#category_image' class='category_image' data-toggle='modal' data-id='" . $row['category_id'] . "'><i class='fa fa-edit'></i></a></span>";
                           echo " </td>
-                            <td>" . $row['category_name'] . "</td>";
+                            <td>" . $row['category_name'] . "</td><td>" . $row['category_commission'] . "%</td>";
                           echo "<td>";
                           echo "<button class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['category_id'] . "'><i class='fa fa-edit'></i> Edit</button> ";
 
@@ -140,6 +140,7 @@
         success: function (response) {
           $('.category_id').val(response.category_id);
           $('#category_name').val(response.category_name);
+          $('#commission').val(response.category_commission);
           $('.delete_category_id').val(response.category_id);
           $('.delete_category_name').html(response.category_name);
           $('.imageid').val(response.category_id);

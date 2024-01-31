@@ -25,7 +25,7 @@
                             <select class="form-control" id="meal_type" name="meal_type" required>
                                 <option value="" required>Select Meal type</option>
                                 <?php
-                                $stmt = $conn->prepare("SELECT category_id, category_name FROM category");
+                                $stmt = $conn->prepare("SELECT category_id, category_name FROM category WHERE category_delete=0");
                                 $stmt->execute();
                                 foreach ($stmt as $row) {
                                     echo "<option value=" . $row['category_id'] . ">" . $row['category_name'] . "</option>";
@@ -144,6 +144,36 @@
                         class="fa fa-close"></i> Close</button>
                 <button type="submit" class="btn btn-success btn-flat" name="deactivate"><i class="fa fa-check"></i>
                     Deactivate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--offer-->
+<div class="modal fade" id="offer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><b>Update Cost</b></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="POST" action="items_offer.php">
+                    <input type="hidden" class="itemofferid" name="id">
+                    <div class="form-group">
+                        <label for="offer" class="col-sm-3 control-label">Update Cost</label>
+                        <div class="col-sm-9">
+                            <input type="number" step="any" class="form-control offer" id="offer" name="offer" required>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-success btn-flat" name="addoffer"><i class="fa fa-check"></i>
+                    Save</button>
                 </form>
             </div>
         </div>
