@@ -10,7 +10,7 @@ if (isset($_POST['add'])) {
 	$stmt = $conn->prepare("SELECT category_commission FROM category WHERE category_id=:category_id");
 	$stmt->execute(['category_id' => $meal_type]);
 	foreach ($stmt as $row)
-		$item_commission_cost = $_POST['amount']+(($row['category_commission']/100)*$_POST['amount']);
+		$item_commission_cost = $_POST['amount'] + (($row['category_commission'] / 100) * $_POST['amount']);
 	$filename = isset($_FILES['photo']['name']) ? $_FILES['photo']['name'] : null;
 
 	// File Upload Handling

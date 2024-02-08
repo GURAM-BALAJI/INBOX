@@ -17,7 +17,7 @@ include 'includes/header.php';
     body {
 
         font-family: 'Roboto', sans-serif;
-        background-color: #dcdff1;
+        background-color: white;
     }
 
     hr {
@@ -46,7 +46,7 @@ include 'includes/header.php';
 
     .kitchen {
         flex: 0 0 calc(25% - 2%);
-        background-color: #dcdff1;
+        background-color: white;
         box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);
         /* Four kitchens per row */
         box-sizing: border-box;
@@ -112,6 +112,8 @@ include 'includes/header.php';
         color: #000;
         color: '#0f0f0f';
         animation: moveCart 2s linear infinite;
+        margin-top: 50px;
+        z-index: 999;
     }
 
     @keyframes moveCart {
@@ -146,6 +148,8 @@ include 'includes/header.php';
     .cartimag {
         text-decoration: none;
         font-size: 60px;
+
+
     }
 
 
@@ -163,7 +167,7 @@ include 'includes/header.php';
         margin: 10px 0 5px 10px;
         border-radius: 5px;
         padding: 10px;
-        background-color: #dcdff1;
+        background-color: white;
         box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);
         text-transform: capitalize;
         font-weight: 700;
@@ -395,16 +399,24 @@ include 'includes/header.php';
             transform: scale(0.7);
         }
     }
+    .initial-hidden {
+    display: none;
+}
+.admin-options {
+    display: none;
+}
 </style>
 
 <body>
     <!-- partial:index.partial.html -->
 
     <center>
-        <div>
-            <img src="logo.png" width="100%" height="70px"
-                style="box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
-        </div>
+        <a href="MyHome">
+            <div>
+                <img src="logo.png" width="100%" height="70px"
+                    style="box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
+            </div>
+        </a>
         <?php
         $conn = $pdo->open();
         $stmt = $conn->prepare("SELECT * FROM message");
@@ -461,7 +473,7 @@ include 'includes/header.php';
 
                                 <img src="<?php echo $image ?>" alt="<?php echo $row['category_name']; ?> ">
                                 <center>
-                                    <h2>
+                                    <h2 style="color:black;">
                                         <?php echo $row['category_name']; ?>
                                     </h2>
                                 </center>
@@ -482,7 +494,7 @@ include 'includes/header.php';
                     $conn = $pdo->open();
 
                     $stmt = $conn->prepare("SELECT admin_id,items_image, admin_name, items_name,item_meal_type,item_commission_cost,items_id FROM admin  LEFT JOIN items ON admin_id = item_chef_id
-        WHERE admin_type = 2 AND item_meal_type = :meal_type AND item_status = 1");
+        WHERE admin_type = 2 AND item_meal_type = :meal_type AND item_status = 1 AND items_ack = 1");
                     $stmt->execute([':meal_type' => $meal_type]);
                     $allRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -503,7 +515,7 @@ include 'includes/header.php';
                                         class="star-kitchen">☆</span><span class="star-kitchen">☆</span>
                                 </div>
                             </div>
-                            <div class="movie-block-container">
+                            <div class="movie-block-container admin-options initial-hidden">
 
                                 <?php
                                 foreach ($allRows as $itemRow) {
@@ -511,7 +523,7 @@ include 'includes/header.php';
                                         $noItemsExist = false; // There are items for at least one admin
                                         ?>
                                         <div class="movie"
-                                            style="background-color: #dcdff1;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
+                                            style="background-color: white;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
                                             <!-- <div class="offer-tag">5% OFF</div> -->
                                             <img src="<?php echo './items_images/' . $itemRow['items_image']; ?>" alt="Dosa">
                                             <div class="star-ratings">
@@ -583,7 +595,8 @@ include 'includes/header.php';
                 </p>
                 <?php
             } ?>
-            <a class="cartimag" href="MyCart">🛒</a>
+            <a class="cartimag" href="MyCart"><i class="fa fa-shopping-cart"
+                    style="font-size:48px;color: #eb8334; position: relative;"></i></a>
 
         </div>
         <?php
@@ -614,5 +627,46 @@ include 'includes/header.php';
         });
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var adminLabels = document.querySelectorAll(".kitchen-label");
+        var lastAdminLabel = adminLabels[adminLabels.length - 1]; // Get the last admin label
+        var lastAdminOptions = lastAdminLabel.nextElementSibling; // Get the options for the last admin
+
+        adminLabels.forEach(function (adminLabel) {
+            var adminOptions = adminLabel.nextElementSibling;
+            adminOptions.style.display = "none"; // Initially hide the admin options
+            adminOptions.style.flexWrap = "wrap"; // Set flex-wrap to wrap
+
+            adminLabel.addEventListener("click", function (event) {
+                // Move the clicked admin's options below the clicked label
+                adminLabel.parentNode.insertBefore(adminOptions, adminLabel.nextElementSibling);
+
+                adminOptions.style.display = (adminOptions.style.display === "flex") ? "none" : "flex";
+                event.stopPropagation();
+            });
+
+            adminOptions.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
+
+            // Iterate over each movie and apply styles
+            var movies = adminOptions.querySelectorAll(".movie");
+            movies.forEach(function (movie) {
+                movie.style.width = "calc(50% - 20px)"; // Adjust the width as needed
+                movie.style.margin = "10px"; // Adjust the margin as needed
+                movie.style.boxSizing = "border-box";
+                movie.style.color = "";
+            });
+        });
+
+        // Open the options for the last admin by default
+        lastAdminOptions.style.display = "flex";
+    });
+</script>
+<?php 
+include 'footer/footer.php';
+?>
+
 
 </html>

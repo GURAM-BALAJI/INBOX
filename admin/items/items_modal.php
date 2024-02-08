@@ -150,7 +150,7 @@
     </div>
 </div>
 
-<!--offer-->
+<!--Update cost-->
 <div class="modal fade" id="offer">
     <div class="modal-dialog">
         <div class="modal-content">

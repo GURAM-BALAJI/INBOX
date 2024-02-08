@@ -12,12 +12,12 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Active Items
+          Un-Verified Menu
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">Manage</li>
-          <li class="active">Active Items</li>
+          <li class="active">Un-Verified Menu</li>
         </ol>
       </section>
 
@@ -49,61 +49,62 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
-
+                <!-- <div class="box-header with-border"> -->
+                  <!-- <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i -->
+                      <!-- class="fa fa-plus"></i> New Items</a> -->
+                <!-- </div> -->
                 <div class="box-body">
-                  <table id="example1" class="table table-bordered">
+                <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>ID</th>
-                      <th>Image</th>
+                      <th>Id</th>
                       <th>Name</th>
-                      <th>Price(com)</th>
-                      <th>Chef Name</th>
-                      <th>Catogory</th>
+                      <th>Image</th>
+                      <th>Category</th>
+                      <th>Price (Comm)</th>
+                      <th>Status</th>
                       <th>Added Date</th>
+                      <th>Tools</th>
                     </thead>
                     <tbody>
                       <?php
                       $conn = $pdo->open();
+
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete AND item_status=:item_status AND items_ack=1");
-                        $stmt->execute(['items_delete' => 0, 'item_status' => 1]);
+                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=0 AND items_ack=0");
+                        $stmt->execute();
+                        $categoryNames = [
+                          0 => 'Veg',
+                          1 => 'Non-veg',
+                        ];
                         foreach ($stmt as $row) {
+                          $status = ($row['item_status']) ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Not Active</span>';
+                          $ack=(!$row['items_ack'])?'Pending..! ':" ";
+                         
                           $image = (!empty($row['items_image'])) ? '../../items_images/' . $row['items_image'] : '../../items_images/noimage.jpg';
+
                           echo "<tr>";
-                          echo "<td>" . $row['items_id'] . "</td>
-                        <td>
-                          <img src='" . $image . "' height='30px' width='30px'>";
-                          echo "</td>
-                            <td>" . $row['items_name'] . "</td>
-                            <td>" . $row['items_cost'] . " (" . $row['item_commission_cost'] . ")</td>";
-                          echo "<td>";
-                          $stmt1 = $conn->prepare("SELECT admin_name FROM admin WHERE admin_id =:given_id");
-                          $stmt1->execute(['given_id' => $row['item_chef_id']]);
-                          foreach ($stmt1 as $row1)
-                            echo $row1['admin_name'];
-                            echo " (".$row['item_chef_id'].")";
-                          echo "</td>";
-                          switch ($row['item_category']) {
-                            case 0:
-                              $label = 'Veg';
-                              break;
-                            case 1:
-                              $label = 'Non-Veg';
-                              break;
-                            default:
-                              $label = 'Unknown';
-                              break;
-                          }
-                          echo "<td>" . htmlspecialchars($label) . " - ";
+                          echo "<td>" . $row['items_id'] . "</td>";
+                          echo "<td>" . $row['items_name'] . "</td>";
+                          echo "<td> <img src='" . $image . "' height='40px' width='50px'>" . "</td>";
+                          echo "<td>" . $categoryNames[$row['item_category']]." - ";
                           $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
-                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]);
+                          $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]); 
                           foreach ($stmtcatname as $rowcatname)
                             echo htmlspecialchars($rowcatname['category_name']);
                           echo "</td>";
 
+                          echo "<td>" . $row['items_cost'] ." (" . $row['item_commission_cost'] .")</td>
+                            <td>
+                            $status $ack";
+                          echo "<span class='pull-right'>
+                          <a href='#offer' class='offeridadd' data-toggle='modal' data-id=" . $row['items_id'] . "><i class='fa fa-check-square-o'></i></a></span>";
+                          echo "</td>";
                           echo "<td>" . $row['items_add_date'] . "</td>";
-                          echo "</tr>
-                        ";
+                          echo "<td>";
+                          echo "<button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['items_id'] . "'><i class='fa fa-trash'></i> Delete</button>";
+
+                          echo "</td>";
+                          echo "</tr>";
                         }
                       } catch (PDOException $e) {
                         echo "Something Went Wrong.";
@@ -123,6 +124,7 @@
 
 
     </div>
+    <?php include 'unverified_items_modal.php'; ?>
 
   </div>
   <!-- ./wrapper -->
@@ -146,16 +148,25 @@
       getRow(id);
     });
 
+    $(document).on('click', '.offeridadd', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var offer = $(this).data('offer');
+      $('.itemofferid').val(id);
+      getRow(id);
+    });
+
     function getRow(id) {
       $.ajax({
         type: 'POST',
-        url: 'items_row.php',
+        url: 'unverified_items_row.php',
         data: {
           id: id
         },
         dataType: 'json',
         success: function (response) {
           $('.catid').val(response.items_id);
+          $('.offer').val(response.item_commission_cost);
           $('.itemname').html(response.items_name);
           $('.itemstatus1').val(response.items_id);
           $('.itemstatus2').val(response.items_id);

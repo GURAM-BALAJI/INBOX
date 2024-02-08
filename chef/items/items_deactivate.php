@@ -8,6 +8,8 @@ if (isset($_POST['deactivate'])) {
 		try {
 			$stmt = $conn->prepare("UPDATE items SET item_status=:status WHERE items_id=:id");
 			$stmt->execute(['status' => 0, 'id' => $id]);
+			$stmt = $conn->prepare("DELETE FROM `cart` WHERE `cart_items_id`=:id");
+			$stmt->execute(['id' => $id]);			
 			$_SESSION['success'] = 'Item deactivated successfully';
 		} catch (PDOException $e) {
 			$_SESSION['error'] = "Something Went Wrong.";

@@ -12,12 +12,12 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Items
+          Menu
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">Manage</li>
-          <li class="active">Items</li>
+          <li class="active">Menu</li>
         </ol>
       </section>
 
@@ -56,15 +56,14 @@
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>Item_id</th>
-                      <th>Iteam_name</th>
+                      <th>Id</th>
+                      <th>Name</th>
                       <th>Image</th>
-                      <th>Chef_Id</th>
+                      <th>Chef</th>
                       <th>Category</th>
-                      <th>Meal type</th>
                       <th>Price</th>
-                      <th>Com_Price</th>
-                      <th>status</th>
+                      <th>Comm Price</th>
+                      <th>Status</th>
                       <th>Added Date</th>
                       <th>Tools</th>
 
@@ -73,7 +72,7 @@
                       <?php
                       $conn = $pdo->open();
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=0");
+                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=0 AND items_ack=1");
                         $stmt->execute();
                         $categoryNames = [
                           0 => 'Veg',
@@ -93,11 +92,10 @@
                           $stmt1->execute(['given_id' => $row['item_chef_id']]);
                           foreach ($stmt1 as $row1)
                             echo $row1['admin_name'];
+                            echo " (".$row['item_chef_id'].")";
                           echo "</td>";
 
-                          echo "<td>" . $categoryNames[$row['item_category']] . "</td>";
-
-                          echo "<td>";
+                          echo "<td>" . $categoryNames[$row['item_category']] . " - ";
                           $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
                           $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]); foreach ($stmtcatname as $rowcatname)
                             echo htmlspecialchars($rowcatname['category_name']);

@@ -57,10 +57,9 @@
                       <th>Item Id</th>
                       <th>Image</th>
                       <th>Name</th>
-                      <th>Cost</th>
+                      <th>Price</th>
                       <th>Chef Name</th>
                       <th>Catogory</th>
-                      <th>Meal Type</th>
                       <th>Added Date</th>
                     </thead>
                     <tbody>
@@ -88,6 +87,7 @@
                           $stmt1->execute(['given_id' => $row['item_chef_id']]);
                           foreach ($stmt1 as $row1)
                             echo $row1['admin_name'];
+                          echo " (".$row['item_chef_id'].")";
                           echo "</td>";
                           switch ($row['item_category']) {
                             case 0:
@@ -100,8 +100,7 @@
                               $label = 'Unknown';
                               break;
                           }
-                          echo "<td>" . htmlspecialchars($label) . "</td>";
-                          echo "<td>";
+                          echo "<td>" . htmlspecialchars($label) . "-";
                           $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
                           $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]);
                           foreach ($stmtcatname as $rowcatname)

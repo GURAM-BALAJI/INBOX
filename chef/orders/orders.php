@@ -53,8 +53,8 @@
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>OID</th>
-                      <th>Item - cost*(Qty)</th>
+                      <th>Oreder ID</th>
+                      <th>Item - Price*(Qty)</th>
                       <th>Catogory</th>
                       <th>Added Date</th>
                       <th>Status</th>

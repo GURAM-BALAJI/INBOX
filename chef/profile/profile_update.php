@@ -37,7 +37,7 @@ if (isset($_POST['save'])) {
 	$_SESSION['error'] = 'Fill up required details first';
 }
 
-header('location: ../home/home.php');
+header('location: ../index.php');
 
 
 function validateMobileNumber($mobile)

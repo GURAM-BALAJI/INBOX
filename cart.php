@@ -17,7 +17,7 @@ include 'includes/header.php';
     body {
 
         font-family: 'Roboto', sans-serif;
-        background-color: #dcdff1;
+        background-color: white;
     }
 
     @import url(‘https://fonts.googleapis.com/css?family=Josefin+Sans’);
@@ -40,8 +40,8 @@ include 'includes/header.php';
         border-radius: 5px;
         font-size: 17px;
         font-weight: 700;
-        box-shadow: -4px -4px 7px #fffdfdb7, 3px 3px 5px rgba(94, 104, 121, 0.388);
-        background: #d8dbed;
+        box-shadow: -4px -4px 7px rgba(15, 15, 15, 0.72), 3px 3px 5px rgba(21, 23, 26, 0.39);
+        background: #fff;
         border: none;
         padding: 12px;
         text-align: center;
@@ -52,7 +52,7 @@ include 'includes/header.php';
 
     .button:hover {
         box-shadow: inset -3px -3px 7px #ffffffb0,
-            inset 3px 3px 5px rgba(94, 104, 121, 0.692);
+            inset 3px 3px 5px rgba(11, 11, 11, 0.69);
     }
 
     .tabs ul {
@@ -67,7 +67,7 @@ include 'includes/header.php';
         padding: 15px 0;
         text-align: center;
         font-size: 14px;
-        color: #767678;
+        color: #e89a1f;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -77,9 +77,9 @@ include 'includes/header.php';
     }
 
     .tabs ul li.active {
-        background: #dde1e7;
+        background: #fff;
         color: rgba(0, 0, 0, 0.76);
-        box-shadow: inset 2px 2px 5px #babecc,
+        box-shadow: inset 2px 2px 5px #b0b4c4,
             inset -5px -5px 10px #ffffff73;
     }
 
@@ -90,26 +90,32 @@ include 'includes/header.php';
     .form-popup {
         display: none;
         position: fixed;
-        top: 0;
+        align-items: center;
+        justify-content: center;
+        top: 10%;
         left: 0;
+        bottom: 0;
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.65);
         z-index: 999;
+        transform: translateY(-10%);  
 
     }
 
     .form-container {
+        width: 300px;
+        align-items: center;
+        justify-content: center;
         margin-top: 25%;
         margin-left: auto;
         margin-right: auto;
-        width: 350px;
         border-radius: 10px;
         padding: 30px 35px 40px;
-        background-color: #dcdff1;
+        background-color: white;
         box-sizing: border-box;
         position: relative;
-        font-family: Verdana;
+        box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),6px 6px 10px rgba(0, 0, 0, 0.2);
     }
 
     label {
@@ -128,35 +134,35 @@ include 'includes/header.php';
         padding: 15px;
         margin-top: 8px;
         margin-bottom: 15px;
-        /* Adjust as needed */
-        border: none;
+        border: #000;
         border-radius: 3px;
         width: 100%;
         font-size: 14px;
         font-weight: 500;
         padding: 10px;
         padding-left: 15px;
-        background-color: rgba(255, 255, 255, 0.07);
+        background-color: rgba(22, 22, 22, 0.07);
         box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff73;
     }
 
     ::placeholder {
-        color: #555;
+        color: #000000;
     }
 
     .form-container .btn {
-        padding: 12px;
+        padding: 5px;
         border: none;
         cursor: pointer;
         border-radius: 5px;
         width: 100%;
         font-size: 25px;
         box-shadow: -4px -4px 7px #fffdfdb7, 3px 3px 5px rgba(94, 104, 121, 0.388);
-        margin-top: 15px;
+        margin-top: 10px;
         margin-bottom: 10px;
-        background: #dcdff1;
+        background: white ;
         opacity: 0.8;
-        font-weight: 700;
+        font-weight: 700px;
+        color: #000;
     }
 
     .text {
@@ -170,13 +176,15 @@ include 'includes/header.php';
 
 <body>
     <div class="modal-content"
-        style=" position: fixed; top: 0; width: 100%; background-color: #d5d8e8;  box-shadow: -4px -4px 7px #fffdfdb7, 3px 3px 5px rgba(94, 104, 121, 0.388); height:105px;">
+        style=" position: fixed; top: 0; width: 100%; background-color: white;  box-shadow: -4px -4px 7px #fffdfdb7, 3px 3px 5px rgba(94, 104, 121, 0.388); height:105px; z-index: 999;">
         <div class="modal-body" style="padding:0px 0px 0px 0px;">
-            <center>
-                <h3 style="font-weight: bold;
+            <a href="MyHome">
+                <center>
+                    <h3 style="font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 2px;">CART</h3>
-            </center>
+                </center>
+            </a>
             <div class="tabs">
                 <ul>
                     <a href="MyHome">
@@ -225,15 +233,22 @@ include 'includes/header.php';
             foreach ($stmt as $row11) {
                 $i = 1;
                 $items_id = $row11['items_id'];
-                $stmt1 = $conn->prepare("SELECT * FROM items WHERE items_id=:items_id");
+                $stmt1 = $conn->prepare("SELECT * FROM items left join admin on admin_id=item_chef_id WHERE items_id=:items_id");
                 $stmt1->execute(['items_id' => $items_id]);
                 foreach ($stmt1 as $row1) {
                     ?>
                     <section class="content" style=" min-height: 10px; padding: 10px 15px 3px 15px; ">
                         <div class="modal-content"
-                            style="border-radius:15px; background-color: #dcdff1;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); ">
+                            style="border-radius:15px; background-color: #fff;  box-shadow: -4px -4px 7px rgba(224, 220, 220, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); ">
                             <div class="modal-body" style="padding:10px 15px 10px 15px;">
+                                <b style="color: #e89a1f;">
+                                    <?php echo "Kitchen's: "; ?>
+                                </b>
+                                <b style="text-transform: capitalize; border-radius:8px;padding:4px;color:#000;">
+                                    <?php echo $row1['admin_name']; ?>
+                                </b>
                                 <table style="width: 100%;">
+
                                     <tr>
                                         <td rowspan="2" width="20%"> <img style=" border-radius: 10px; "
                                                 src="./items_images/<?php echo $row1['items_image']; ?>" height="60px" width="60px">
@@ -242,31 +257,31 @@ include 'includes/header.php';
                                         <td width="50%" style="padding-left: 10px;">
                                             <?php echo "<span style='text-transform: capitalize;font-weight:bold; color:black'>" . $row1['items_name'] . "</span>"; ?>
                                         </td>
-                                        <td rowspan="2" width="30%">
+                                        <td rowspan="2" width="35%">
                                             <form method="POST" action="Minus">
                                                 <center>
                                                     <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
                                                     <?php if ($row11['cart_qty'] == '1') { ?>
-                                                        <button style="color:#767678;border: none; background-color:#dcdff1;"
-                                                            type="submit" name="remove"><i style="font-size:30px"
+                                                        <button style="color:#e91b1b;border: none; background-color:#fff;"
+                                                            type="submit" name="remove"><i style="font-size:20px"
                                                                 class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
                                                     <?php } else { ?>
-                                                        <button style="color:#767678;border: none; background-color:#dcdff1;"
-                                                            type="submit" name="minus"><i style="font-size:30px"
+                                                        <button style="color:#000;border: none; background-color:#fff;"
+                                                            type="submit" name="minus"><i style="font-size:20px"
                                                                 class="fa fa-minus-circle fa-lg" aria-hidden="true"></i></button>
                                                     <?php } ?>
                                                     <input type="hidden" name="qty" value="<?php echo $row11['cart_qty']; ?>">
-                                                    <b style="font-size:1.5rem;font-size:20px;margin:0px 10px 0px 10px">
+                                                    <b style="font-size:1.5rem;font-size:15px;margin:0px 5px 0px 5px">
                                                         <?php echo $row11['cart_qty']; ?>
                                                     </b>
-                                                    <button style="color:#767678;border: none; background-color:#dcdff1;"
-                                                        type="submit" name="add"><i style="font-size:30px"
+                                                    <button style="color:#3d981e;border: none; background-color:#fff;"
+                                                        type="submit" name="add"><i style="font-size:20px"
                                                             class="fa fa-plus-circle fa-lg" aria-hidden="true"></i></button>
                                                 </center>
                                             </form>
                                         </td>
                                     <tr>
-                                        <td style="padding-left: 10px;color:#767678;">
+                                        <td style="padding-left: 10px;color: #3d981e;">
                                             <?php
                                             $total += $row11['cart_qty'] * $row1['item_commission_cost'];
                                             echo '<b>&#8377;' . $row11['cart_qty'] * $row1['item_commission_cost'] . '</b>'; ?>
@@ -283,25 +298,25 @@ include 'includes/header.php';
             <br><br><br><br><br><br><br><br><br><br><br><br><br>
             <?php if ($i == 1) { ?>
                 <div class="modal-content"
-                    style=" position: fixed; bottom: 0; width: 100%; background-color: #d5d8e8;  box-shadow: -4px -4px 7px #fffdfdb7, 3px 3px 5px rgba(94, 104, 121, 0.388); border-top-left-radius: 25px;border-top-right-radius: 25px;">
+                    style=" position: fixed; bottom: 0; width: 100%; background-color:#fff;box-shadow: -4px -4px 7px rgba(7, 7, 7, 0.72), 3px 3px 5px rgba(94, 104, 121, 0.388); border-top-left-radius: 25px;border-top-right-radius: 25px;">
                     <div class="modal-body">
                         <table>
                             <tr>
-                                <th width="80%" style="padding-left:15px;color:#767678;padding-top:10px;">
+                                <th width="80%" style="padding-left:15px;color:#000;padding-top:10px;">
                                     Cart Total
                                 </th>
                                 <th>
-                                    <b style="color:#767678;padding-top:10px;"> &#8377;
+                                    <b style="color:#000;padding-top:10px;"> &#8377;
                                         <?php echo $total; ?>
                                     </b>
                                 </th>
                             </tr>
                             <tr>
-                                <th width="80%" style="padding-left:15px;color:#767678;padding-top:10px;">
+                                <th width="80%" style="padding-left:15px;color:#000;padding-top:10px;">
                                     Tax and Charges
                                 </th>
                                 <th>
-                                    <b style="color:#767678;padding-top:10px;">
+                                    <b style="color:#000;padding-top:10px;">
                                         <?php
                                         $tax = $total * 5 / 100;
                                         echo '+' . $tax;
@@ -311,17 +326,17 @@ include 'includes/header.php';
                                 </th>
                             </tr>
                             <tr>
-                                <th width="80%" style="padding-left:15px;color:#767678;padding-top:10px;">
+                                <th width="80%" style="padding-left:15px;color:#000;padding-top:10px;">
                                     Delivery Charges
                                 </th>
                                 <th>
-                                    <b style="color:#767678;padding-top:10px;">
+                                    <b style="color:#000;padding-top:10px;">
                                         <?php
                                         $stmt1 = $conn->prepare("SELECT `message` FROM `message` WHERE `message_id`=:id");
                                         $stmt1->execute(['id' => 3]);
                                         foreach ($stmt1 as $row1)
                                             $delivery = $row1['message'];
-                                        if ($delivery == 0)
+                                        if (!isset($delivery) || $delivery == 0)
                                             echo "Free";
                                         else {
                                             echo '+' . $delivery;
@@ -332,10 +347,10 @@ include 'includes/header.php';
                             </tr>
 
                             <tr>
-                                <th width="80%" style="padding-bottom:20px;padding-top:20px;padding-left:15px">
+                                <th width="80%" style="padding-bottom:20px;padding-top:20px;padding-left:15px; color:#000">
                                     Total Cost
                                 </th>
-                                <th style="padding-bottom:20px;padding-top:20px;">
+                                <th style="padding-bottom:20px;padding-top:20px;color:#3d981e">
                                     <b> &#8377;
                                         <?php echo $total; ?>
                                     </b>
@@ -343,7 +358,7 @@ include 'includes/header.php';
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button class="button" onclick="openForm()">
+                                    <button style="color: #000;  background-color= #fff;" class="button" onclick="openForm()">
                                         Checkout
                                     </button>
                                 </td>
@@ -438,8 +453,8 @@ include 'includes/header.php';
                     $total = 0; ?>
                 <section class="content" style=" min-height: 10px; padding: 10px 15px 3px 15px; ">
                     <div class="modal-content"
-                        style="border-radius:15px; background-color: #dcdff1;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); ">
-                        <div class="modal-body" style="padding:10px 15px 10px 15px;">
+                    style="border-radius: 15px; background: #fff; box-shadow: -4px -4px 10px rgba(148, 146, 142, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); border:0.5px solid black">
+     <div class="modal-body" style="padding:10px 15px 10px 15px;">
                             <table>
                                 <tr>
                                     <td width="50%" style=" font-weight:bold; font-size:20px;font: bold 20px/1 sans-serif;">Order
@@ -475,7 +490,7 @@ include 'includes/header.php';
             }
             if ($next_id != 0) {
                 ?>
-                            <tr style="background-color: #caccdb;">
+                            <tr style="">
                                 <td width="70%"
                                     style="padding:4px 10px 4px 10px;adding-bottom:20px;font: 1.2rem 'Fira Sans', sans-serif;text-transform: capitalize;">
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -504,7 +519,7 @@ include 'includes/header.php';
 
 
             <div class="text">
-                <h1><b>Delivery Address</b></h1>
+                <h1><b style="font-size: 30px;">Delivery Address</b></h1>
             </div>
 
             <label for="Name">Name</label>
@@ -521,8 +536,8 @@ include 'includes/header.php';
             <input type="text" placeholder="Enter Area/Street/Land Mark" id="address-line-2" name="address-line-2"
                 required>
 
-            <button type="submit" style=" background: #c3c4c9;" class="btn">Save</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            <button type="submit" style=" background: #2cde2c;font-size: 30px;" class="btn">Payment</button>
+            <button type="button" style=" background: #fa2a2a; font-size: 30px;" class="btn cancel"  onclick="closeForm()">Close</button>
 
         </form>
     </div>

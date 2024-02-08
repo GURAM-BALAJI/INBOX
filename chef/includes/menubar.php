@@ -20,7 +20,7 @@
       <li><a href="../accepted_orders/accepted_orders.php"><i class="fa fa-check-circle"></i> <span>Orders</span></a></li>
       <!-- <li><a href="../not_accepted_orders/not_accepted_orders.php"><i class="fa fa-times-circle "></i> <span>Not Accepted Orders</span></a></li> -->
       <li><a href="../items_active/items_active.php"><i class="fa fa-tasks"></i> <span>Active Items</span></a></li>
-      <li><a href="../items/items.php"><i class="fa fa-tasks"></i> <span>Items</span></a></li>
+      <li><a href="../items/items.php"><i class="fa fa-tasks"></i> <span>Menu</span></a></li>
 
     </ul>
   </section>

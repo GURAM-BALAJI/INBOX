@@ -64,19 +64,19 @@
                       <?php
                       $conn = $pdo->open();
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM orders left join items  on orders_items=items_id left join address_details on address_id=orders_address_id WHERE orders_delivered=:orders_delivered AND orders_accept=:orders_accept");
-                        $stmt->execute(['orders_delivered'=>2, 'orders_accept'=>1]);
+                        $stmt = $conn->prepare("SELECT * FROM history left join items  on history_item=items_id left join address_details on address_id=history_address_id WHERE history_delivered=:history_delivered AND history_accept=:history_accept");
+                        $stmt->execute(['history_delivered'=>2, 'history_accept'=>1]);
                         foreach ($stmt as $row) {
                           $image = (!empty($row['items_image'])) ? '../../items_images/' . $row['items_image'] : '../../items_images/noimage.jpg';
                           echo "<tr style='background-color:red;'>";
-                          echo "<td>" . $row['orders_id'] . "</td>";
+                          echo "<td>" . $row['history_id'] . "</td>";
                           echo "<td>";
                           $stmt1 = $conn->prepare("SELECT admin_name FROM admin WHERE admin_id =:given_id");
                           $stmt1->execute(['given_id' => $row['item_chef_id']]);
                           foreach ($stmt1 as $row1)
                             echo $row1['admin_name'];
                           echo "</td>";
-                          echo "<td>" . $row['orders_qty'] . "- " . $row['items_name'] . "(" . $row['items_cost'] . ")</td>";
+                          echo "<td>" . $row['history_qty'] . "- " . $row['items_name'] . "(" . $row['items_cost'] . ")</td>";
                           switch ($row['item_category']) {
                             case 0:
                               $label = 'Veg';

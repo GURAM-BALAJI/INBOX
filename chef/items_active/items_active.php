@@ -56,17 +56,16 @@
                       <th>ID</th>
                       <th>Image</th>
                       <th>Name</th>
-                      <th>Cost</th>
+                      <th>Price</th>
                       <th>Catogory</th>
-                      <th>Meal Type</th>
                       <th>Added Date</th>
                     </thead>
                     <tbody>
                       <?php
                       $conn = $pdo->open();
                       try {
-                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete AND item_status=:item_status AND item_chef_id=:item_chef_id");
-                        $stmt->execute(['items_delete' => 0, 'item_status' => 1, 'item_chef_id' => $_SESSION['vm_id_admin']]);
+                        $stmt = $conn->prepare("SELECT * FROM items WHERE items_delete=:items_delete AND item_status=:item_status AND item_chef_id=:item_chef_id AND items_ack=:items_ack");
+                        $stmt->execute(['items_delete' => 0, 'item_status' => 1, 'item_chef_id' => $_SESSION['vm_id_admin'], 'items_ack' => 1]);
                         foreach ($stmt as $row) {
                           $image = (!empty($row['items_image'])) ? '../../items_images/' . $row['items_image'] : '../../items_images/noimage.jpg';
                           echo "<tr>";
@@ -87,8 +86,7 @@
                               $label = 'Unknown';
                               break;
                           }
-                          echo "<td>" . htmlspecialchars($label) . "</td>";
-                          echo "<td>";
+                          echo "<td>" . htmlspecialchars($label) . " - ";
                           $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
                           $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]);
                           foreach ($stmtcatname as $rowcatname)

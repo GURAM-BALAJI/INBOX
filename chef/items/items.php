@@ -12,12 +12,12 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Items
+          Menu
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
           <li class="active">Manage</li>
-          <li class="active">Items</li>
+          <li class="active">Menu</li>
         </ol>
       </section>
 
@@ -51,19 +51,17 @@
               <div class="box">
                 <div class="box-header with-border">
                   <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i
-                      class="fa fa-plus"></i> New Items</a>
+                      class="fa fa-plus"></i> Add Menu</a>
                 </div>
                 <div class="box-body">
                   <table id="example1" class="table table-bordered">
                     <thead>
-                      <th>Item_id</th>
-                      <th>Iteam_name</th>
+                      <th>Id</th>
+                      <th>Name</th>
                       <th>Image</th>
-                      <th>Chef_Id</th>
                       <th>Category</th>
-                      <th>Meal type</th>
                       <th>Price</th>
-                      <th>status</th>
+                      <th>Status</th>
                       <th>Added Date</th>
                       <th>Tools</th>
 
@@ -79,11 +77,9 @@
                           0 => 'Veg',
                           1 => 'Non-veg',
                         ];
-
-
-
                         foreach ($stmt as $row) {
                           $status = ($row['item_status']) ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Not Active</span>';
+                          $ack=(!$row['items_ack'])?'Pending..! ':" ";
                           $active = (!$row['item_status']) ? '<span class="pull-right"><a href="#activate" class="status" data-toggle="modal" data-id="' . $row['items_id'] . '"><i class="fa fa-check-square-o"></i></a></span>' : '<span class="pull-right"><a href="#not_activate" class="status" data-toggle="modal" data-id="' . $row['items_id'] . '"><i class="fa fa-check-square-o"></i></a></span>';
                           $image = (!empty($row['items_image'])) ? '../../items_images/' . $row['items_image'] : '../../items_images/noimage.jpg';
 
@@ -91,25 +87,17 @@
                           echo "<td>" . $row['items_id'] . "</td>";
                           echo "<td>" . $row['items_name'] . "</td>";
                           echo "<td> <img src='" . $image . "' height='40px' width='50px'>" . "</td>";
-                          echo "<td>";
-                          $stmt1 = $conn->prepare("SELECT admin_name FROM admin WHERE admin_id =:given_id");
-                          $stmt1->execute(['given_id' => $row['item_chef_id']]);
-                          foreach ($stmt1 as $row1)
-                            echo $row1['admin_name'];
-                          echo "</td>";
-
-                          echo "<td>" . $categoryNames[$row['item_category']] . "</td>";
-
-                          echo "<td>";
+                          echo "<td>" . $categoryNames[$row['item_category']]." - ";
                           $stmtcatname = $conn->prepare("SELECT category_name FROM category WHERE category_id=:item_meal_type");
                           $stmtcatname->execute(['item_meal_type' => $row['item_meal_type']]); 
                           foreach ($stmtcatname as $rowcatname)
                             echo htmlspecialchars($rowcatname['category_name']);
                           echo "</td>";
 
-                          echo "<td>" . $row['items_cost'] ."</td>
+                          echo "<td>" . $row['items_cost'] ."<span class='pull-right'>
+                          <a href='#offer' class='offeridadd' data-toggle='modal' data-id=" . $row['items_id'] . "><i class='fa fa-check-square-o'></i></a></span></td>
                             <td>
-                            $status";
+                            $status $ack";
                           echo "$active";
                           echo "</td>";
                           echo "<td>" . $row['items_add_date'] . "</td>";
@@ -161,6 +149,15 @@
       getRow(id);
     });
 
+    $(document).on('click', '.offeridadd', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var offer = $(this).data('offer');
+      $('.itemofferid').val(id);
+      getRow(id);
+    });
+
+
     function getRow(id) {
       $.ajax({
         type: 'POST',
@@ -174,10 +171,9 @@
           $('.itemname').html(response.items_name);
           $('.itemstatus1').val(response.items_id);
           $('.itemstatus2').val(response.items_id);
+          $('.offer').val(response.items_cost);
           $('.itemname1').html(response.items_name);
           $('.itemname2').html(response.items_name);
-
-
         }
       });
     }
