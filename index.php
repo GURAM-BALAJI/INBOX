@@ -268,14 +268,14 @@ include 'includes/header.php';
         text-align: center;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-         -webkit-line-clamp: 2; 
+        -webkit-line-clamp: 2;
         word-wrap: break-word;
         word-break: break-all;
         flex-grow: 1;
         text-overflow: ellipsis;
         font-family: 'Lato', sans-serif;
         font-weight: bold;
-        
+
 
 
     }
@@ -286,6 +286,19 @@ include 'includes/header.php';
         box-sizing: border-box;
         animation: scaleIn 1s ease;
 
+    }
+
+    .movie a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .movie a:hover {
+        color: orange;
+    }
+
+    .movie {
+        cursor: pointer;
     }
 
     @keyframes scaleIn {
@@ -421,8 +434,7 @@ include 'includes/header.php';
     <center>
         <a href="MyHome">
             <div>
-                <img src="logo.png" width="100%" height="70px"
-                    style="box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
+                <img src="logo.png" width="100%" height="70px" style="box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
             </div>
         </a>
         <?php
@@ -439,7 +451,7 @@ include 'includes/header.php';
                 <marquee style="color:black;">
                     <?php echo $row['message']; ?>
                 </marquee>
-            <?php }
+        <?php }
         } ?>
 
         <?php
@@ -475,7 +487,7 @@ include 'includes/header.php';
 
                     while ($row = $stmt_categories->fetch(PDO::FETCH_ASSOC)) {
                         $image = (!empty($row['category_image'])) ? 'category_images/' . $row['category_image'] : 'category_images/noimage.jpg';
-                        ?>
+                    ?>
                         <div class="kitchen">
                             <a href="MyHome?meal_type=<?php echo $row['category_id']; ?>">
 
@@ -487,7 +499,7 @@ include 'includes/header.php';
                                 </center>
                             </a>
                         </div>
-                        <?php
+                    <?php
                     }
                     ?>
                 </div>
@@ -505,19 +517,19 @@ include 'includes/header.php';
                     $conn = $pdo->open();
 
                     $stmt = $conn->prepare("SELECT admin_id,items_image, admin_name, items_name,item_meal_type,item_commission_cost,items_id FROM admin  LEFT JOIN items ON admin_id = item_chef_id
-        WHERE admin_type = 2 AND item_meal_type = :meal_type AND item_status = 1 AND items_ack = 1");
+                     WHERE admin_type = 2 AND item_meal_type = :meal_type AND item_status = 1 AND items_ack = 1");
                     $stmt->execute([':meal_type' => $meal_type]);
                     $allRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     $displayedAdmins = [];
                     $noItemsExist = true; // Assume there are no items for any admin
-            
+
                     foreach ($allRows as $row) {
                         $admin_id = $row['admin_id'];
                         $admin_name = $row['admin_name'];
 
                         if (!in_array($admin_id, $displayedAdmins)) {
-                            ?>
+                ?>
 
                             <div class="kitchen-label">
                                 <?php echo 'Kitchen - ' . $admin_name; ?>
@@ -532,33 +544,29 @@ include 'includes/header.php';
                                 foreach ($allRows as $itemRow) {
                                     if ($admin_id == $itemRow['admin_id']) {
                                         $noItemsExist = false; // There are items for at least one admin
-                                        ?>
-                                        <div class="movie"
-                                            style="background-color: white;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
+                                ?>
+                                        <div class="movie" style="background-color: white; box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);" onclick="addToCart(<?php echo $itemRow['items_id']; ?>, <?php echo $itemRow['item_meal_type']; ?>)">
+                                            <a href="AddCart?id=<?php echo $itemRow['items_id']; ?>&return_id=<?php echo $itemRow['item_meal_type']; ?>"></a>
                                             <!-- <div class="offer-tag">5% OFF</div> -->
                                             <img src="<?php echo './items_images/' . $itemRow['items_image']; ?>" alt="Dosa">
                                             <!-- <div class="star-ratings">
-                                                <span class="star">☆</span>
-                                                <span class="star">☆</span>
-                                                <span class="star">☆</span>
-                                                <span class="star">☆</span>
-                                                <span class="star">☆</span>
-                                            </div>  -->
-                                            <div class="description-container ">
+                                            <span class="star">☆</span>
+                                            <span class="star">☆</span>
+                                            <span class="star">☆</span>
+                                            <span class="star">☆</span>
+                                            <span class="star">☆</span>
+                                             </div> -->
+                                            <div class="description-container">
                                                 <?php echo $itemRow['items_name']; ?>
                                             </div>
                                             <div class="price">
-                                                <h4>
-                                                    <?php echo '&#8377;' . $itemRow['item_commission_cost']; ?>/-
-                                                </h4>
-                                                <a
-                                                    href="AddCart?id=<?php echo $itemRow['items_id']; ?>&return_id=<?php echo $itemRow['item_meal_type']; ?>">
-                                                    <div> <i class="fas fa-cart-shopping"></i>
+                                                <h4><?php echo '&#8377;' . $itemRow['item_commission_cost']; ?>/-</h4>
+                                                <a href="AddCart?id=<?php echo $itemRow['items_id']; ?>&return_id=<?php echo $itemRow['item_meal_type']; ?>">
+                                                    <div><i class="fas fa-cart-shopping"></i></div>
                                                 </a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <?php
+                                <?php
                                     }
                                 }
 
@@ -566,28 +574,27 @@ include 'includes/header.php';
 
                             <?php
                         }
-                        ?>
-                    </div>
-                    </div>
-                    <?php
-                    $displayedAdmins[] = $admin_id;
+                            ?>
+                            </div>
+            </div>
+        <?php
+                        $displayedAdmins[] = $admin_id;
                     }
                 }
 
                 if ($noItemsExist) {
                     // Display a message if there are no items for any admin
-                    ?>
-                <div class="no-items-message"
-                    style="text-align: center; justify-content:center;margin-top:90%; font-size:20px; color:#f17E21;">
-                    Sorry, we don't have any Kitchen available today. 😔
-                </div>
-                <?php
+        ?>
+        <div class="no-items-message" style="text-align: center; justify-content:center;margin-top:90%; font-size:20px; color:#f17E21;">
+            Sorry, we don't have any Kitchen available today. 😔
+        </div>
+    <?php
                 }
 
                 $pdo->close();
 
-                ?>
-        <?php } ?>
+    ?>
+<?php } ?>
     </section>
     <?php
     $i = 0;
@@ -597,20 +604,19 @@ include 'includes/header.php';
             $result = $stmt->fetch();
         if ($result !== false)
             $i = $result['count'];
-        ?>
+    ?>
 
         <div id="cart-icon">
             <?php if ($i != 0) { ?>
                 <p class="badge_cart">
                     <?php echo $i; ?>
                 </p>
-                <?php
+            <?php
             } ?>
-            <a class="cartimag" href="MyCart"><i class="fa fa-shopping-cart"
-                    style="font-size:48px;color: orange; position: relative;"></i></a>
+            <a class="cartimag" href="MyCart"><i class="fa fa-shopping-cart" style="font-size:48px;color: orange; position: relative;"></i></a>
 
         </div>
-        <?php
+    <?php
     } ?>
 </body>
 <?php include 'includes/scripts.php'; ?>
@@ -618,8 +624,8 @@ include 'includes/header.php';
     var movieStars = document.querySelectorAll('.star');
     var movieRated = false;
 
-    movieStars.forEach(function (star, index) {
-        star.addEventListener('click', function () {
+    movieStars.forEach(function(star, index) {
+        star.addEventListener('click', function() {
             if (!movieRated) {
                 for (var i = 0; i < movieStars.length; i++) {
                     if (i <= index) {
@@ -637,6 +643,11 @@ include 'includes/header.php';
             }
         });
     });
+
+
+    function addToCart(itemId, returnId) {
+        window.location.href = `AddCart?id=${itemId}&return_id=${returnId}`;
+    }
 </script>
 
 
