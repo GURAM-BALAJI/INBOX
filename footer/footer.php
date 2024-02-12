@@ -20,8 +20,8 @@
         }
 
         footer {
-            background: linear-gradient(to right, #ff8c00c7, rgba(108, 101, 99, 0.4));
-            color: #ffffff;
+            background: white;
+            color: #161414;
             padding: 30px 0;
             position: relative;
             bottom: 0;
@@ -29,19 +29,21 @@
         }
 
         .footer-logo {
-            color: #ffffff;
+            color:#161414;
             font-weight: bold;
             text-decoration: none;
             /* Remove default text decoration */
         }
 
         .footer-heading {
+            
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #ffffff;
+            color: #161414;
             border-bottom: 2px solid #fbfbfb89;
             box-shadow: 15px 14px 16px rgba(0, 0, 0, 0.1);
+           
 
 
 
@@ -66,11 +68,11 @@
         .social-icons {
             font-size: 24px;
             margin-right: 15px;
-            color: #ffffff;
+            color: #161414;
         }
 
         .fa-youtube {
-            color: #ffffff;
+            color: black;
             /* Change YouTube icon color to white */
         }
 
@@ -94,7 +96,7 @@
         }
 
         .form-group label {
-            color: #ffffff;
+            color:#161414;
             margin-bottom: 5px;
 
         }
@@ -128,7 +130,7 @@
 
 
         .home-about-contact a {
-            color: #ffffff;
+            color: #161414;
             text-decoration: none;
         }
 
@@ -142,12 +144,14 @@
             position: relative;
             transform: translateY(-50%);
             font-size: 24px;
-            color: #ffffff;
+            color: #161414;
             text-decoration: none;
             transition: font-size 0.1s ease-in-out, color 0.3s ease-in-out;
             opacity: 0;
             /* Initially hidden */
             display: inline-block;
+            color: #ff8c00;
+            
 
         }
 
@@ -198,7 +202,7 @@
             margin-bottom: 20px;
             padding: 30px;
             text-align: center;
-            color: #ffffff;
+            color: #161414;
             font-style: italic;
             font-weight: bold;
 
@@ -374,13 +378,13 @@
                 <div class="col-md-4"><a href="#" class="footer-logo" id="logo"><i class="fas fa-utensils"></i> INBOX
                         FOOD</a>
 
-                    <h6 class="footer-heading animate_animated animate_bounceInLeft custom-duration1">Contact
-                        Information</h6>
+                    <h6 class="footer-heading ">Contact
+                        </h6>
                     <p class="animate_animated animate_zoomInDown ">Email:
                         your@email.com</p>
                 </div>
                 <div class="col-md-4">
-                    <h6 class="footer-heading animate_animated animate_bounceInLeft custom-duration2">Pages</h6>
+                    <h6 class="footer-heading ">Pages</h6>
                     <ul class="footer-links animate_animated animate_zoomInDown">
                         <li class="home-about-contact "><a href="MyHome">Home</a></li>
                         <li class="home-about-contact"><a href="Footer/About.html">About
@@ -400,7 +404,7 @@
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="footer-heading animate_animated animate_bounceInLeft custom-duration3">Connect
+                    <h5 class="footer-heading ">Connect
                         with Us</h5>
                     <a href="#" class="social-icons animate_animated animate_zoomInDown"><i class="fab fa-facebook"></i></a>
                     <a href="#" class="social-icons animate_animated animate_zoomInDown"><i class="fab fa-twitter"></i></a>

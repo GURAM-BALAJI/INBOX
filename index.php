@@ -164,15 +164,18 @@ include 'includes/header.php';
 
     .kitchen-label {
         border: 0.5px solid #c4c3c3;
-        margin: 10px 0 5px 10px;
+        margin: 10px px 5px 10px;
+        margin-left: 2px;
         border-radius: 5px;
         padding: 10px;
-        background-color: white;
         box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);
         text-transform: capitalize;
         font-weight: 700;
         text-align: left;
+        font-size: 15px;
         animation: kitchen-label 3s linear forwards;
+        background-color: #f17E21;
+        color: white;
     }
 
     @keyframes kitchen-label {
@@ -265,13 +268,15 @@ include 'includes/header.php';
         text-align: center;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+         -webkit-line-clamp: 2; 
         word-wrap: break-word;
         word-break: break-all;
-        text-overflow: ellipsis;
         flex-grow: 1;
+        text-overflow: ellipsis;
         font-family: 'Lato', sans-serif;
         font-weight: bold;
+        
+
 
     }
 
@@ -364,7 +369,8 @@ include 'includes/header.php';
         box-sizing: border-box;
         justify-content: center;
         float: right;
-        background-color: #feb64d;
+        background-color: #f17E21;
+        color: white;
     }
 
     .star-kitchen {
@@ -380,10 +386,10 @@ include 'includes/header.php';
 
     .fa-cart-shopping {
         font-size: 25px;
-        color: orange;
+        color: #f17E21;
         margin-top: 0px;
         margin-left: 25px;
-        animation: zoomInOut 5s infinite;
+        animation: zoomInOut 3s infinite;
     }
 
     @keyframes zoomInOut {
@@ -392,19 +398,21 @@ include 'includes/header.php';
         }
 
         50% {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
         100% {
-            transform: scale(0.7);
+            transform: scale(1.0);
         }
     }
+
     .initial-hidden {
-    display: none;
-}
-.admin-options {
-    display: none;
-}
+        display: none;
+    }
+
+    .admin-options {
+        display: none;
+    }
 </style>
 
 <body>
@@ -484,6 +492,9 @@ include 'includes/header.php';
                     ?>
                 </div>
             </div>
+            <?php
+            include 'footer/footer.php';
+            ?>
         <?php } else { ?>
             <div class="main">
 
@@ -509,13 +520,13 @@ include 'includes/header.php';
                             ?>
 
                             <div class="kitchen-label">
-                                <?php echo $admin_name; ?>
-                                <div class="star-ratings-kitchen"><span class="star-kitchen">☆</span><span
+                                <?php echo 'Kitchen - ' . $admin_name; ?>
+                                <!-- <div class="star-ratings-kitchen"><span class="star-kitchen">☆</span><span
                                         class="star-kitchen">☆</span><span class="star-kitchen">☆</span><span
                                         class="star-kitchen">☆</span><span class="star-kitchen">☆</span>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="movie-block-container admin-options initial-hidden">
+                            <div class="movie-block-container ">
 
                                 <?php
                                 foreach ($allRows as $itemRow) {
@@ -526,20 +537,20 @@ include 'includes/header.php';
                                             style="background-color: white;  box-shadow: -4px -4px 7px rgba(255, 253, 253, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388);">
                                             <!-- <div class="offer-tag">5% OFF</div> -->
                                             <img src="<?php echo './items_images/' . $itemRow['items_image']; ?>" alt="Dosa">
-                                            <div class="star-ratings">
+                                            <!-- <div class="star-ratings">
                                                 <span class="star">☆</span>
                                                 <span class="star">☆</span>
                                                 <span class="star">☆</span>
                                                 <span class="star">☆</span>
                                                 <span class="star">☆</span>
-                                            </div>
+                                            </div>  -->
                                             <div class="description-container ">
                                                 <?php echo $itemRow['items_name']; ?>
                                             </div>
                                             <div class="price">
-                                                <h2>&#8377;&nbsp;
-                                                    <?php echo $itemRow['item_commission_cost']; ?>/-
-                                                </h2>
+                                                <h4>
+                                                    <?php echo '&#8377;' . $itemRow['item_commission_cost']; ?>/-
+                                                </h4>
                                                 <a
                                                     href="AddCart?id=<?php echo $itemRow['items_id']; ?>&return_id=<?php echo $itemRow['item_meal_type']; ?>">
                                                     <div> <i class="fas fa-cart-shopping"></i>
@@ -596,7 +607,7 @@ include 'includes/header.php';
                 <?php
             } ?>
             <a class="cartimag" href="MyCart"><i class="fa fa-shopping-cart"
-                    style="font-size:48px;color: #eb8334; position: relative;"></i></a>
+                    style="font-size:48px;color: orange; position: relative;"></i></a>
 
         </div>
         <?php
@@ -627,46 +638,7 @@ include 'includes/header.php';
         });
     });
 </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var adminLabels = document.querySelectorAll(".kitchen-label");
-        var lastAdminLabel = adminLabels[adminLabels.length - 1]; // Get the last admin label
-        var lastAdminOptions = lastAdminLabel.nextElementSibling; // Get the options for the last admin
 
-        adminLabels.forEach(function (adminLabel) {
-            var adminOptions = adminLabel.nextElementSibling;
-            adminOptions.style.display = "none"; // Initially hide the admin options
-            adminOptions.style.flexWrap = "wrap"; // Set flex-wrap to wrap
-
-            adminLabel.addEventListener("click", function (event) {
-                // Move the clicked admin's options below the clicked label
-                adminLabel.parentNode.insertBefore(adminOptions, adminLabel.nextElementSibling);
-
-                adminOptions.style.display = (adminOptions.style.display === "flex") ? "none" : "flex";
-                event.stopPropagation();
-            });
-
-            adminOptions.addEventListener("click", function (event) {
-                event.stopPropagation();
-            });
-
-            // Iterate over each movie and apply styles
-            var movies = adminOptions.querySelectorAll(".movie");
-            movies.forEach(function (movie) {
-                movie.style.width = "calc(50% - 20px)"; // Adjust the width as needed
-                movie.style.margin = "10px"; // Adjust the margin as needed
-                movie.style.boxSizing = "border-box";
-                movie.style.color = "";
-            });
-        });
-
-        // Open the options for the last admin by default
-        lastAdminOptions.style.display = "flex";
-    });
-</script>
-<?php 
-include 'footer/footer.php';
-?>
 
 
 </html>

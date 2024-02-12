@@ -40,8 +40,8 @@ include 'includes/header.php';
         border-radius: 5px;
         font-size: 17px;
         font-weight: 700;
-        box-shadow: -4px -4px 7px rgba(15, 15, 15, 0.72), 3px 3px 5px rgba(21, 23, 26, 0.39);
-        background: #fff;
+        box-shadow: -4px -4px 7px rgba(204, 204, 204, 0.42), 3px 3px 5px rgba(96, 96, 96, 0.16);
+        background: #F17E21;
         border: none;
         padding: 12px;
         text-align: center;
@@ -67,7 +67,7 @@ include 'includes/header.php';
         padding: 15px 0;
         text-align: center;
         font-size: 14px;
-        color: #e89a1f;
+        color: #F17E21;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -92,12 +92,12 @@ include 'includes/header.php';
         position: fixed;
         align-items: center;
         justify-content: center;
-        top: 10%;
+        top: 7%;
         left: 0;
         bottom: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.65);
+        background: rgba(0, 0, 0, 0.79);
         z-index: 999;
         transform: translateY(-10%);  
 
@@ -115,19 +115,21 @@ include 'includes/header.php';
         background-color: white;
         box-sizing: border-box;
         position: relative;
-        box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),6px 6px 10px rgba(0, 0, 0, 0.2);
     }
 
     label {
         display: block;
         margin-top: 15px;
         margin-bottom: 5px;
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 15px;
+        font-weight: 500;
     }
 
     .form-container input[type=text],
-    .form-container input[type=password] {
+    .form-container input[type=password],
+    .form-container input[type=number],
+    .form-container textarea
+     {
         width: 100%;
         display: block;
         height: 43px;
@@ -172,6 +174,8 @@ include 'includes/header.php';
         text-align: center;
         margin-bottom: 30px;
     }
+    ::placeholder {
+  color:rgba(105, 106, 109, 0.39);
 </style>
 
 <body>
@@ -191,8 +195,8 @@ include 'includes/header.php';
                         <li style="width:20%;padding-left:20px;padding-right:20px;"><i class="fa fa-chevron-left"
                                 aria-hidden="true"></i></li>
                     </a>
-                    <li style="width:50%;" class="orders_li">Orders</li>
-                    <li style="width:50%;" class="history_li">History</li>
+                    <li style="width:50%;" class="orders_li">Cart Items</li>
+                    <li style="width:50%;" class="history_li">Order History</li>
                 </ul>
             </div>
         </div>
@@ -241,8 +245,8 @@ include 'includes/header.php';
                         <div class="modal-content"
                             style="border-radius:15px; background-color: #fff;  box-shadow: -4px -4px 7px rgba(224, 220, 220, 0.92), 3px 3px 5px rgba(94, 104, 121, 0.388); ">
                             <div class="modal-body" style="padding:10px 15px 10px 15px;">
-                                <b style="color: #e89a1f;">
-                                    <?php echo "Kitchen's: "; ?>
+                                <b style="color: #f17E21;">
+                                    <?php echo "Kitchen: "; ?>
                                 </b>
                                 <b style="text-transform: capitalize; border-radius:8px;padding:4px;color:#000;">
                                     <?php echo $row1['admin_name']; ?>
@@ -255,14 +259,14 @@ include 'includes/header.php';
                                         </td>
 
                                         <td width="50%" style="padding-left: 10px;">
-                                            <?php echo "<span style='text-transform: capitalize;font-weight:bold; color:black'>" . $row1['items_name'] . "</span>"; ?>
+                                            <?php echo "<span style='text-transform: capitalize; color:black'>" . $row1['items_name'] . "</span>"; ?>
                                         </td>
                                         <td rowspan="2" width="35%">
                                             <form method="POST" action="Minus">
                                                 <center>
                                                     <input type="hidden" name="id" value="<?php echo $row11['cart_id']; ?>">
                                                     <?php if ($row11['cart_qty'] == '1') { ?>
-                                                        <button style="color:#e91b1b;border: none; background-color:#fff;"
+                                                        <button style="color:#F17E21;border: none; background-color:#fff;"
                                                             type="submit" name="remove"><i style="font-size:20px"
                                                                 class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
                                                     <?php } else { ?>
@@ -281,10 +285,10 @@ include 'includes/header.php';
                                             </form>
                                         </td>
                                     <tr>
-                                        <td style="padding-left: 10px;color: #3d981e;">
+                                        <td style="padding-left: 10px;">
                                             <?php
                                             $total += $row11['cart_qty'] * $row1['item_commission_cost'];
-                                            echo '<b>&#8377;' . $row11['cart_qty'] * $row1['item_commission_cost'] . '</b>'; ?>
+                                            echo '&#8377;' . $row11['cart_qty'] * $row1['item_commission_cost'] . '/-'; ?>
                                         </td>
                                     </tr>
 
@@ -295,31 +299,31 @@ include 'includes/header.php';
                     </section>
                 <?php }
             } ?>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             <?php if ($i == 1) { ?>
                 <div class="modal-content"
-                    style=" position: fixed; bottom: 0; width: 100%; background-color:#fff;box-shadow: -4px -4px 7px rgba(7, 7, 7, 0.72), 3px 3px 5px rgba(94, 104, 121, 0.388); border-top-left-radius: 25px;border-top-right-radius: 25px;">
+                    style=" position: fixed; bottom: 0; width: 100%; background-color:#fff;box-shadow: -4px -4px 7px rgba(155, 155, 155, 0.72), 3px 3px 5px rgba(174, 174, 175, 0.39); border-top-left-radius: 25px;border-top-right-radius: 25px;">
                     <div class="modal-body">
                         <table>
                             <tr>
                                 <th width="80%" style="padding-left:15px;color:#000;padding-top:10px;">
-                                    Cart Total
+                                    Item Total
                                 </th>
                                 <th>
-                                    <b style="color:#000;padding-top:10px;"> &#8377;
-                                        <?php echo $total; ?>
+                                    <b style="color:#000;padding-top:10px;">
+                                        <?php echo '&#8377;' .$total.'/-'; ?>
                                     </b>
                                 </th>
                             </tr>
                             <tr>
                                 <th width="80%" style="padding-left:15px;color:#000;padding-top:10px;">
-                                    Tax and Charges
+                                    Tax
                                 </th>
                                 <th>
                                     <b style="color:#000;padding-top:10px;">
                                         <?php
                                         $tax = $total * 5 / 100;
-                                        echo '+' . $tax;
+                                        echo '&#8377;' . $tax.'/-';
                                         $total += $tax;
                                         ?>
                                     </b>
@@ -327,7 +331,7 @@ include 'includes/header.php';
                             </tr>
                             <tr>
                                 <th width="80%" style="padding-left:15px;color:#000;padding-top:10px;">
-                                    Delivery Charges
+                                    Delivery
                                 </th>
                                 <th>
                                     <b style="color:#000;padding-top:10px;">
@@ -339,27 +343,31 @@ include 'includes/header.php';
                                         if (!isset($delivery) || $delivery == 0)
                                             echo "Free";
                                         else {
-                                            echo '+' . $delivery;
+                                            echo '&#8377;' . $delivery.'/-';
                                             $total += $delivery;
                                         } ?>
                                     </b>
                                 </th>
                             </tr>
-
                             <tr>
-                                <th width="80%" style="padding-bottom:20px;padding-top:20px;padding-left:15px; color:#000">
-                                    Total Cost
+                                <th colspan="2" style="">
+                                <hr style=" border: .5px solid #2f2f2f; ">
                                 </th>
-                                <th style="padding-bottom:20px;padding-top:20px;color:#3d981e">
-                                    <b> &#8377;
-                                        <?php echo $total; ?>
+                            </tr>
+                            <tr>
+                                <th width="80%" style="padding-bottom:20px;padding-left:15px; color:#000">
+                                    Total
+                                </th>
+                                <th style="padding-bottom:20px;color:#3d981e">
+                                    <b> 
+                                        <?php echo '&#8377;' .$total.'/-'; ?>
                                     </b>
                                 </th>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button style="color: #000;  background-color= #fff;" class="button" onclick="openForm()">
-                                        Checkout
+                                    <button style="color: #ffffff; " class="button" onclick="openForm()">
+                                       Place your Order
                                     </button>
                                 </td>
                             </tr>
@@ -370,7 +378,7 @@ include 'includes/header.php';
             <?php } else {
                 ?>
                 <a href="MyHome">
-                    <div class="button" style="padding:10px;">No food in my stomach. <br><i class="fa fa-frown-o"
+                    <div class="button" style="padding:10px;background-color:white;">No food in my stomach. <br><i class="fa fa-frown-o"
                             aria-hidden="true"></i></div>
                 </a>
 
@@ -467,7 +475,7 @@ include 'includes/header.php';
                                 <tr>
                                     <td colspan='2' style="color:#9f9f9f; padding-bottom:10px; font-size:12px;">
                                         <?php if ($row['record_accept'] == 1 && $row['record_delivered'] == 0)
-                                            echo '<i class="fa fa-home" aria-hidden="true"></i> Acepted order and Preparing..';
+                                            echo '<i class="fa fa-home" aria-hidden="true"></i> Order Placed..';
                                         elseif ($row['record_accept'] == 1 && $row['record_delivered'] == 1)
                                             echo '<i class="fa fa-gift" aria-hidden="true"></i> Delivered.'; ?>
                                     </td>
@@ -506,7 +514,7 @@ include 'includes/header.php';
             </section>
         <?php } else { ?>
             <a href="MyHome">
-                <div class="button" style="padding:10px;">My stomach is empty. <br><i class="fa fa-frown-o"
+                <div class="button" style="padding:10px;background-color:white;">My stomach is empty. <br><i class="fa fa-frown-o"
                         aria-hidden="true"></i></div>
             </a>
         <?php }
@@ -519,25 +527,26 @@ include 'includes/header.php';
 
 
             <div class="text">
-                <h1><b style="font-size: 30px;">Delivery Address</b></h1>
+                <h1><p style="font-size: 30px;">Delivery Details</p></h1>
             </div>
 
             <label for="Name">Name</label>
             <input type="text" placeholder="Enter Your name." id="username" name="username" required>
 
-            <label for="phone">Phone</label>
-            <input type="text" placeholder="Enter Your Phone Number" id="phone" name="phone" required>
-
-            <label for="address-line-1">Land Mark</label>
-            <input type="text" placeholder="Enter Flat No/Appartment Name/House No" id="address-line-1"
-                name="address-line-1" required>
+            <label for="phone">Contact</label>
+            <input type="number" placeholder="Enter Your Contact Number" id="phone" name="phone" required>
 
             <label for="address-line-2">Address</label>
-            <input type="text" placeholder="Enter Area/Street/Land Mark" id="address-line-2" name="address-line-2"
+            <textarea id="address-line-2" name="address-line-2"  rows="4" cols="50" style=" height: 60px;"
                 required>
 
-            <button type="submit" style=" background: #2cde2c;font-size: 30px;" class="btn">Payment</button>
-            <button type="button" style=" background: #fa2a2a; font-size: 30px;" class="btn cancel"  onclick="closeForm()">Close</button>
+            </textarea>
+
+            <label for="address-line-1">Land Mark</label>
+            <input type="text" placeholder="Enter Your Land Mark" id="address-line-1"
+                name="address-line-1" required>
+                
+            <button type="submit" style=" background: #F17E21;font-size: 20px;color: #ffffff;" class="button">Procced To Pay</button>
 
         </form>
     </div>
@@ -568,7 +577,7 @@ include 'includes/header.php';
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
     }
-
+  
 </script>
 
 </html>

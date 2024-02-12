@@ -55,7 +55,7 @@
                       <thead>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
+                        <th>MSG</th>
                         <th>Subject</th>
                         <th>Date</th>
                           <th>View</th>
@@ -73,7 +73,7 @@
                           <tr>
                             <td>" . $row['contact_name'] . "</td>
                               <td>" . $row['contact_email'] . "</td>
-                                <td>" . $row['contact_phone'] . "</td>
+                                <td>" . $row['contact_message'] . "</td>
                                     <td>" . $row['contact_subject'] . "</td>
                                     <td>" . $row['contact_date'] . "</td>";
                               echo "<td><form action='contact_view_row.php' method='get'>

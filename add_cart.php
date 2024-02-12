@@ -13,7 +13,7 @@ if ($cart_items_id > 0) {
     $qty = $row['cart_qty'] + 1;
     $stmt1 = $conn->prepare("UPDATE cart SET cart_qty=:qty WHERE cart_id=:id");
     $stmt1->execute(['qty' => $qty, 'id' => $row['cart_id']]);
-    $_SESSION['success'] = "+1 Added To Cart. ";
+    $_SESSION['success'] = " Item quantity added to the cart : ".$qty;
    } else {
        try {
             date_default_timezone_set('Asia/Kolkata');
@@ -21,7 +21,7 @@ if ($cart_items_id > 0) {
             $stmt = $conn->prepare("INSERT INTO cart (cart_items_id, cart_qty, cart_user_id,cart_added_date) VALUES (:cart_items_id, :cart_qty, :cart_user_id, :cart_added_date)");
             $stmt->execute(['cart_items_id' => $cart_items_id, 'cart_qty' => 1, 'cart_user_id' => $cart_user_id, 'cart_added_date' => $today]);
             if (!isset($_POST['buy_now']))
-                $_SESSION['success'] = "Added To Cart.";
+                $_SESSION['success'] = "Item added to cart : 1";
        } catch (PDOException $e) {
             $pdo->close();
            $_SESSION['error'] = "Something Went Wrong.";
